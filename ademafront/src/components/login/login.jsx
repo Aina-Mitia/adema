@@ -3,14 +3,15 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import NavbarHome from '../navbar/navbarhome';
 import { useState } from "react";
+import { useLogin } from '../hooks/useLogin';
 
 
 const Login = () => {
-  
+  const {errorLogin, login} = useLogin() 
   const navigate = useNavigate()
   const [error,setError] = useState(false)
 
-  axios.defaults.withCredentials = true;
+  // axios.defaults.withCredentials = true;
   const [value, setValue] = useState({
     email:"",
     password:""
@@ -29,16 +30,18 @@ const Login = () => {
     }).catch(err=>console.log(err))
 },[])*/
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    axios.post("http://localhost:5000/login",value).then(res=>{
+    /*axios.post("http://localhost:5000/login",value).then(res=>{
       if (res.data.Login ){
         alert("ok")
         navigate("/appareil")
       }else {
         alert("error")
       }
-    }).catch(err=>console.log(err))
+    }).catch(err=>console.log(err))*/
+    console.log(value);
+    await login(value);
     
     if (value.email == 0 || value.password==0){
       setError(true)

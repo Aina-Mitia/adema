@@ -1,3 +1,27 @@
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken";
+import { login } from "./usercontrol.js";
+
+export const createToken = (_id) => {
+    return jwt.sign({_id},"secret-key",{expiresIn:'3d'})
+}
+
+export const loginUser = async (req,res) => {
+    const {email,password} = req.body
+
+    try {
+       const user = await login(email,password)
+       
+       const token =  createToken(user._id)
+       res.status(200).json({email,token})
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+}
+
+
 /*import jwt from "jsonwebtoken";
 import pool from "../server.js";
 import cookieParser from "cookie-parser";

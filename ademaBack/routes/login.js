@@ -1,7 +1,7 @@
-// import express from "express"
-// const router = express.Router();
-// import {loginVerification} from "../controllers/logincontrol.js"
+import express from "express"
+const router = express.Router();
+import {loginUser} from "../controllers/logincontrol.js"
 
-// router.post("/login",loginVerification)
+router.post("/login/user",loginUser)
 
-// export default router;
+export default router;

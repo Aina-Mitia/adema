@@ -6,6 +6,8 @@ const app = express();
 // import mariadb from "mariadb";
 import appareilRoute from "./routes/appareil.js";
 import fournisseurRoute from "./routes/fournisseur.js";
+import signup from "./routes/signup.js"
+import login from "./routes/login.js"
 //import signUpRoute from "./routes/signup.js"
 //import loginRoute from "./routes/login.js"
 import cors from "cors";
@@ -15,13 +17,13 @@ import bodyParser from "body-parser"
 import mongoose from "mongoose";
 import {Server} from "socket.io"
 
-const server = http.createServer(app)
-const io = new Server(server,()=>{
-    cors:{
-        origin:"http://localhost:3000",
-        methods: ["GET,POST,PUT,DELETE"]
-    }
-});
+// const server = http.createServer(app)
+// const io = new Server(server,()=>{
+//     cors:{
+//         origin:'http://localhost:3000'
+//         methods: ["GET,POST,PUT,DELETE"]
+//     }
+// });
 
 
 app.use(express.urlencoded({extended: false}))
@@ -40,25 +42,25 @@ mongoose.connect('mongodb://localhost:27017').then(()=>{
 
 
 
-io.on("connection",(socket=>{
-    console.log(socket.id);
+// io.on("connection",(socket=>{
+//     console.log(socket.id);
 
-    socket.on("join_room",(data)=>{
-        socket.join(data)
-    })
+//     socket.on("join_room",(data)=>{
+//         socket.join(data)
+//     })
 
-    socket.on("send_data",(socket)=>{
-        socket.to(data.reference).emit("receive_data",data)
-    })
+//     socket.on("send_data",(socket)=>{
+//         socket.to(data.reference).emit("receive_data",data)
+//     })
 
-    socket.on("disconnect",()=>{
-        console.log(socket.id);
-    })
+//     socket.on("disconnect",()=>{
+//         console.log(socket.id);
+//     })
 
-    server.listen(5000, ()=>{
-        console.log("server running")
-    })
-}))
+//     server.listen(5000, ()=>{
+//         console.log("server running")
+//     })
+// }))
 
 
 //const authRoute = require('./routes/auth');
@@ -78,6 +80,9 @@ io.on("connection",(socket=>{
 
 app.use("/",appareilRoute);
 app.use("/",fournisseurRoute);
+app.use("/",signup)
+app.use("/",login)
+
 //app.use("/",signUpRoute);
 //app.use("/",loginRoute);
 

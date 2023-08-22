@@ -17,8 +17,16 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Button, Stack } from "@mui/material";
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
+import { useLogout } from "../hooks/useLogout";
 
 const Navbar = () => {
+
+    const {logout} = useLogout()
+
+    const handleButton =()=>{
+      logout()
+    }
+
     return( 
       <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -32,6 +40,7 @@ const Navbar = () => {
             <Link to="/fournisseur"><Button color="inherit"><Typography variant="h8" color="white" sx={{ flexGrow:1 }}> Fournisseurs </Typography></Button></Link>
             <Link to="/appareil"><Button color="inherit"><Typography variant="h8" color="white"  sx={{ flexGrow:1 }}> Materiels</Typography></Button></Link>
             <Link to="/user"><Button color="inherit"><Typography variant="h8" color="white" sx={{ flexGrow:1 }}> Profil</Typography></Button></Link>
+            <Button color="inherit"><Typography variant="h8" color="white" sx={{ flexGrow:1 }} onClick={handleButton}> Deconnexion</Typography></Button>
           </Stack>
         </Toolbar>
       </AppBar>

@@ -1,3 +1,25 @@
+import jwt from "jsonwebtoken";
+import { signup } from "./usercontrol.js";
+
+export const createToken = (_id) => {
+    return jwt.sign({_id},"secret-key",{expiresIn:'3d'})
+}
+
+export const signUpUser = async (req,res) => {
+    const {firstName,lastName, email,password} = req.body
+
+    try {
+       const user = await signup(firstName,lastName,email,password)
+       
+       const token =  createToken(user._id)
+       res.status(200).json({email,token})
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+}
+
 /*import pool from "../server.js";
 
 export const registration = async (req,res)=> {

@@ -27,15 +27,44 @@ import UpdateFournisseur from './components/fournisseur/update';
 
 import Profil from './components/profil/profil';
 import UpdateProfil from './components/profil/updateprofil';
+import { useAuthContext } from './components/hooks/useAuthContext';
+import Auth from './components/auth/auth';
 
-const socket = io.connect("http://localhost:5000") 
+// const socket = io.connect("http://localhost:5000") 
 
 function App() {
+  const {user} = useAuthContext()//anamboarana ny protedtion route
+ /* 
+   const joinRoom = ()=>{
+     socket.emit("join_room",data)  // dans le handleSubmit frontend login
+   }  //dia asiana state iray asiana valeur anaty validation login dia io no solon'ny data
 
-  const joinRoom = ()=>{
-    socket.emit("join_room",data)
-  }
-  /* 
+   //backend
+   socket.on("join_room",(data)=>{
+    socket.join(data)
+   })
+
+   //frontend
+   // dans le handleSubmit frontend validation des données
+   const validate = () =>{
+    socket.emit("send_data",data)
+   }
+
+    //backend
+   socket.on("send_data",(data)=>{
+    socket.emit("receive_data",data)
+   })
+
+   //frontend
+   useEffect( ()=>{
+     socket.on("receive_data",(data)=>{
+
+    })
+},[])
+    
+  
+  
+ 
   - joinRoom est la fonction qui permet de se connecter au realtime de socket.io et le socket.io 
   possede la fonction qui traite la connexion du socket.io 
   - Dans la fonction qui envoye les données(en realtime), nous mettons une fonction await socket.emit("envoye",<callBack>)
@@ -54,6 +83,8 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/auth" element={<Auth/>}/>
+
         
         <Route path="/appareil" element={<ViewAppareil />}/>
         <Route path="/appareil/add" element={<AddAppareil />}/>
