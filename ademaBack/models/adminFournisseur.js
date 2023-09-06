@@ -1,7 +1,7 @@
 
 import mongoose from "mongoose";
 
-const adminSchema = mongoose.Schema(
+const adminFournisseur = mongoose.Schema(
     {
         firstName: {
             type : String
@@ -12,7 +12,7 @@ const adminSchema = mongoose.Schema(
         },
         role: {
             type : String,
-            default:"admin"
+            default:"fournisseur"
         },
         
         email: {
@@ -24,5 +24,5 @@ const adminSchema = mongoose.Schema(
     }
 )
 
-const Admin = mongoose.model('admin',adminSchema)
-export default Admin;
+const FournisseurCompte = mongoose.model('admin',adminFournisseur)
+export default FournisseurCompte;

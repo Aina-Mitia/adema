@@ -17,50 +17,68 @@ import bodyParser from "body-parser"
 import mongoose from "mongoose";
 import {Server} from "socket.io"
 
-// const server = http.createServer(app)
-// const io = new Server(server,()=>{
-//     cors:{
-//         origin:'http://localhost:3000'
-//         methods: ["GET,POST,PUT,DELETE"]
-//     }
-// });
+ const server = http.createServer(app)
+const io = new Server(server,{
+    cors:{
+        origin:"http://localhost:3000",
+        methods:["GET,POST,PUT,DELETE"]
+    }
+});
+
+/*Headers('Access-Control-Allow-Origin: *')
+Headers('Access-Control-Allow-Methods: POST,GET,OPTIONS,PUT,DELETE')
+Headers('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization')*/
 
 
 app.use(express.urlencoded({extended: false}))
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors())
+// app.use(cors({
+//     origin:"http://localhost:3000"
+    
+// }))
 
-mongoose.connect('mongodb://localhost:27017').then(()=>{
+/*mongoose.connect('mongodb://localhost:27017').then(()=>{
     console.log('connected to mongo');
     app.listen(5000,()=>{
         console.log("server is running at port 5000");
     });
 }).catch((error)=>{
     console.log(error);
+})*/
+
+server.listen(5000, ()=>{
+            console.log("server running")
+    mongoose.connect('mongodb://localhost:27017').then(()=>{
+    console.log('connected to mongo');
+    
+}).catch((error)=>{
+    console.log(error);
+})
 })
 
 
+io.on("connection",(socket)=>{
+    console.log(socket.id);
 
-// io.on("connection",(socket=>{
-//     console.log(socket.id);
+    socket.on("join_room",(data)=>{
+        socket.join(data)
+    })
 
-//     socket.on("join_room",(data)=>{
-//         socket.join(data)
-//     })
+    socket.on("send_data",(datas)=>{
+        socket.to("ok").emit("receive_data",datas)
+    })
 
-//     socket.on("send_data",(socket)=>{
-//         socket.to(data.reference).emit("receive_data",data)
-//     })
+    socket.on("disconnect",()=>{
+        console.log(socket.id);
+    })
 
-//     socket.on("disconnect",()=>{
-//         console.log(socket.id);
-//     })
-
-//     server.listen(5000, ()=>{
-//         console.log("server running")
-//     })
-// }))
+    socket.on("predelete_data",(datas)=>{
+        socket.to("ok").emit("delete_data",datas)
+    })
+    
+})
 
 
 //const authRoute = require('./routes/auth');

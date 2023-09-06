@@ -2,10 +2,10 @@ import express from "express";
 const router = express.Router();
 // //import pool from "../server.js"
 // import {getAppareils, createAppareil,searching, getSingleAppareil, deleteAppareil, updateAppareil} from "../controllers/appareilcontrol.js"
-import {createAppareil,getAppareils, getSingleAppareil, updateAppareil, deleteAppareil} from  "../controllers/appareilcontrol.js"
+import {createAppareil,getAppareils, getSingleAppareil, updateAppareil, deleteAppareil, getApp} from  "../controllers/appareilcontrol.js"
 
 
-
+router.post("/appareil/fournisseur",getApp)
 router.get("/appareils",getAppareils)
 router.post("/appareil",createAppareil)
 router.get("/appareil/:id",getSingleAppareil)

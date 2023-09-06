@@ -10,6 +10,8 @@ import { Button, Paper, Typography } from "@mui/material";
 import  Box  from "@mui/material/Box";
 import  Grid  from "@mui/material/Grid";
 import {Formik, Form,Field, ErrorMessage} from "formik"
+import io from "socket.io-client";
+ 
 
 
 const AddAppareil = () =>{
@@ -27,18 +29,23 @@ const [data, setData] = useState({
     description:""
 });
 
-//const socket = io.connect("http://localhost:5000") 
+const socket = io.connect("http://localhost:5000") 
+
+const [room,setRoom] = useState("ok")
+
 const handleSubmit = (e) => {
     e.preventDefault();
+    socket.emit("join_room",room)
+    socket.emit("send_data",data)
     axios.post('http://localhost:5000/appareil',data)
         .then(res=>{
             console.log(res);
             navigate("/appareil");
         })
         .catch(err=>console.log(err))
-    /*
-        socket.emit("join_room",data)
-    */
+    
+        
+    
 }
 
 const [stateButton, setSateButton] = useState(true);

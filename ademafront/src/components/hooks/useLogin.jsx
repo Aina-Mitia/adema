@@ -32,8 +32,10 @@ import { useAuthContext } from "./useAuthContext"
             
         })*/
             const response = await axios.post("http://localhost:5000/login/user",data)
+            
             //const json = await response.json()
-            console.log(response.status);
+            // on post d'abord email pour recuperer objet founisseur 
+           // console.log(response.status);
             /*if (!response.ok){
                 setErrorLogin("error")
                 console.log("no");

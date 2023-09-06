@@ -5,7 +5,11 @@ const router = express.Router();
 // import { createFournisseur, deleteFournisseur, searchingFournisseur,getFournisseurs, getSingleFournisseur, updateFournisseur } from "../controllers/fournisseur.js";
 
 import { createFournisseur ,getFournisseurs, getSingleFournisseur, updateFournisseur, deleteFournisseur} from "../controllers/fournisseur.js";
+import { getAppareilFournisseur, getFournisseurAppareil } from "../controllers/logincontrol.js";
 
+
+router.post("/admin", getFournisseurAppareil)
+router.post("/fournisseur/appareil",getAppareilFournisseur)
  router.get("/fournisseurs",getFournisseurs)
  router.post("/fournisseur",createFournisseur)
 router.get("/fournisseur/:id",getSingleFournisseur)

@@ -10,13 +10,13 @@ import { useEntity } from '../hooks/useEntity';
 
 
 
-const Login = () => {
+const LoginAdmin = () => {
   const {errorLogin, login} = useLogin() 
   const navigate = useNavigate()
   const [error,setError] = useState(false)
   const {user} = useAuthContext()
   const {dispatch} = useGetContext()
-  const {getEntity} =useEntity()
+  const {getEntityAdmin} =useEntity()
 
   // axios.defaults.withCredentials = true;
   const [value, setValue] = useState({
@@ -49,7 +49,7 @@ const Login = () => {
     }).catch(err=>console.log(err))*/
     console.log(value);
     await login(value);
-    await getEntity(value.email)
+    await getEntityAdmin(value.email)
     await console.log(user)
     
     if (value.email == 0 || value.password==0){
@@ -126,4 +126,4 @@ return (
     )
   }
 
-  export default Login;
+  export default LoginAdmin;

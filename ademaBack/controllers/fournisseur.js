@@ -72,12 +72,13 @@ export const deleteFournisseur = async (req,res) =>{
 
     try {
         const {id} = req.params;
-        const fournisseur = await Fournisseur.findByIdAndDelete(id)
-        if (!fournisseur){
+         const fournisseur = await Fournisseur.findByIdAndDelete(id)
+       /* if (!fournisseur){
            return res.status(404).json({message:"cannot find this one"})
         }
         //const updatedFournisseur = await Fournisseur.findById(id);
-        res.status(200).json(fournisseur) 
+        res.status(200).json(fournisseur) */
+        res.status(200).json(fournisseur)
         
     } catch (error) {
         console.log(error);
@@ -87,6 +88,7 @@ export const deleteFournisseur = async (req,res) =>{
 
     
 }
+
 
 
 //const express = require("express"); 

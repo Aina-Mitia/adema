@@ -8,6 +8,8 @@ import { Button, Paper,Typography } from "@mui/material";
 import  Box  from "@mui/material/Box";
 import  Grid  from "@mui/material/Grid";
 import {Formik, Form,Field, ErrorMessage} from "formik"
+import io from "socket.io-client";
+
 
 
 
@@ -37,9 +39,15 @@ useEffect( ()=>{
     })
     .catch(err=>console.log(err))
 },[])
+
+const socket = io.connect("http://localhost:5000") 
+
+const [room,setRoom] = useState("ok")
         
 const handleUpdate = (e) => {
     e.preventDefault();
+    socket.emit("join_room",room)
+    socket.emit("send_data",value)
     axios.put('http://localhost:5000/appareil/'+idA , value)
         .then(res=>{
             console.log(res);
@@ -61,8 +69,8 @@ return(
         <Grid align="center" >
             <Typography variant="h6">Ajout d'un nouveau materiel</Typography>
         </Grid>
-        <Formik onSubmit={handleUpdate}>
-                <Form noValidate>
+        <Formik >
+                <Form noValidate onSubmit={handleUpdate}>
            
             <Field as={TextField} fullWidth required
             name="name"

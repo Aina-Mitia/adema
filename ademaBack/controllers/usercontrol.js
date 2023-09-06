@@ -2,6 +2,7 @@ import Appareil from "../models/appareilmodel.js";
 import bcrypt from "bcrypt"
 import validator from "validator";
 import Admin from "../models/admin.js";
+import FournisseurCompte from "../models/adminFournisseur.js";
 
 export const login = async (email, password) =>{
     const admin = await Admin.findOne({email})
@@ -48,6 +49,37 @@ export const signup = async (firstName,lastName, email, password) =>{  //mbola m
     return appareil
 
 }
+
+export const getFournisseur = async (email) =>{
+    
+    
+    try {
+        
+        const fournisseur = await FournisseurCompte.findOne({email})
+        return fournisseur
+
+    } catch (error) {
+       console.log(error) 
+    }
+
+
+}
+
+export const getAdmin = async (email) =>{
+    
+    
+    try {
+        
+        const admin = await Admin.findOne({email})
+        return admin
+
+    } catch (error) {
+       console.log(error) 
+    }
+
+
+}
+
 /*import pool from "../server.js"
 
 export const getSingleUser = async (req,res) => {

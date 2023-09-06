@@ -15,6 +15,10 @@ import DialogConfirm from "../dialog/confirmdialog";
 import AddAppareil from "./addappareil";
 import SingleViewAppareil from "./singleviewappareil";
 import UpdateAppareil from "./update";
+import io from "socket.io-client";
+import { useEntity } from "../hooks/useEntity";
+import { useAuthContext } from "../hooks/useAuthContext";
+
 
 
 const ViewAppareil = () => {
@@ -22,12 +26,22 @@ const ViewAppareil = () => {
 const [data,setData] = useState([]);
 const [allData,setAllData] = useState([])
 const [select,setSelect]=useState("toutes")
+const socket = io.connect("http://localhost:5000") 
+const {entity} = useEntity()
+const {user} = useAuthContext()
+
+
 
 
 //const {id} = useParams();
 const navigate= useNavigate()
+const [room,setRoom] = useState("ok")
+
 
 useEffect( ()=>{
+    socket.emit("join_room",room)
+
+    if (user.role==="admin"){
      axios.get('http://localhost:5000/appareils')
     .then((res)=>{
         setAllData(res.data)
@@ -35,15 +49,39 @@ useEffect( ()=>{
 
     })
     .catch(err=>console.log(err))
+    }
+    socket.on("receive_data",(datas)=>{
+        setData((list)=>[...list,datas])
+    })
+
+    if (user.role==="fournisseur"){
+        axios.post('http://localhost:5000/appareil/fournisseur',entity.name) 
+    .then((res)=>{
+        //setAllData(res.data)
+        setData(res.data)
+    })
+    .catch(err=>console.log(err))
+    }
+
 },[])
+
+/*useEffect( ()=>{
+    
+   socket.on("receive_data",(datas)=>{
+       setData((list)=>[...list,datas])
+   })
+},[socket])*/
+
+
+
 
 const handleDelete =  (id) => {
      axios.delete('http://localhost:5000/appareil/'+id)
-    .then(res=>{
-        //console.log(res)
-        window.location.reload();
-    })
     .catch(err=>console.log(err))
+    //setData(appareil)
+    
+    socket.emit("join_room",room)
+    socket.emit("send_data",data)
 }
 
 const handlebutton = (e) => {
@@ -87,8 +125,8 @@ return(
         <div >   
         
         <Button variant="contained" color="success" onClick={()=>{
-            setOpenAdd(true)
-           
+            //setOpenAdd(true)
+           navigate("/appareil/add")
             }}>Ajouter un nouveau appareil</Button>
         
         </div> 
@@ -195,8 +233,8 @@ return(
                             title="Suppression"
                             openDialogConfirm={openConfirm}
                             setOpenDialogConfirm={setOpenConfirm}
-                            action={handleDelete}
-                            element={item._id}
+                            action={handleDelete(item._id)}
+                            
                             >
                                 Etes-vous sure de supprimer?
                             </DialogConfirm>

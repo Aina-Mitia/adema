@@ -10,6 +10,8 @@ import { Button, Paper, Typography } from "@mui/material";
 import  Box  from "@mui/material/Box";
 import  Grid  from "@mui/material/Grid";
 import {Formik, Form,Field, ErrorMessage} from "formik"
+import io from "socket.io-client";
+
 
 
 const AddFournisseur = () =>{
@@ -24,10 +26,14 @@ const [data, setData] = useState({
     nif:"",
     stat:""
 });
+const socket = io.connect("http://localhost:5000") 
 
+const [room,setRoom] = useState("ok")
 
 const handleSubmit = (e) => {
     e.preventDefault();
+    socket.emit("join_room",room)
+    socket.emit("send_data",data)
     axios.post('http://localhost:5000/fournisseur',data)
         .then(res=>{
             console.log(res);
@@ -48,8 +54,8 @@ return(
         <Grid align="center" >
             <Typography variant="h6">Ajout d'un nouveau fournisseur</Typography>
         </Grid>
-            <Formik onSubmit={handleSubmit}>
-                <Form noValidate>
+            <Formik >
+                <Form noValidate onSubmit={handleSubmit}>
          
                 <Field as={TextField} fullWidth required
                 name="name"

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Appareil from "../models/appareilmodel.js";
 
 
@@ -83,7 +84,10 @@ export const deleteAppareil = async (req,res) =>{
         const {id} = req.params;
         const appareil = await Appareil.findByIdAndDelete(id)
         if (!appareil){
-           return res.status.json({message:"cannot find this one"})
+           return res.status(404).json({message:"cannot find this one"})
+        }
+        if (!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({error:"invalid id"})
         }
         //const updatedAppareil = await Appareil.findById(id);
         res.status(200).json(appareil) 
@@ -97,6 +101,20 @@ export const deleteAppareil = async (req,res) =>{
     
 }
 
+export const getApp = async (req,res) =>{
+
+    try {
+        const {name} = req.body
+        const appareil = await Appareil.find({nom_fournisseur:name})
+        res.status(200).json(appareil)
+
+    } catch (error) {
+       console.log(error) 
+       res.status(500).json({message: error.message})
+
+    }
+
+}
 
 
 //const express = require("express");

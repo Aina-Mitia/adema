@@ -11,6 +11,8 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded"
 import EditRoundedIcon from "@mui/icons-material/EditRounded"
 import LibraryBooksRoundedIcon from "@mui/icons-material/LibraryBooksRounded"
 import Typography from "@mui/material/Typography";
+import io from "socket.io-client";
+
 
 
 
@@ -19,26 +21,77 @@ const ViewFournisseur = () => {
 const [data,setData] = useState([]);
 const [allData,setAllData] = useState([])
 const [select,setSelect]=useState("toutes")
+const socket = io.connect("http://localhost:5000") 
+
 
 
 //const {id} = useParams();
+const navigate= useNavigate()
+const [room,setRoom] = useState("ok")
+const [change,setChange] = useState(null)
 
 useEffect( ()=>{
+    socket.emit("join_room",room)
+
      axios.get('http://localhost:5000/fournisseurs')
     .then((res)=>{
         setAllData(res.data)
         setData(res.data)
     })
     .catch(err=>console.log(err))
+
+    
+
+   /* socket.on("receive_data",(datas)=>{
+        setData((list)=>[...list,datas])
+    })*/
 },[])
 
-const handleDelete =  (id) => {
-     axios.delete('http://localhost:5000/fournisseur/'+id)
-    .then(res=>{
-        //console.log(res)
-        window.location.reload();
+socket.on("receive_data",(datas)=>{
+    setData((list)=>[...list,datas])
+    console.log(socket)
+    console.log(datas)
+    setChange(datas)
+})
+
+socket.on("delete_data",(datas)=>{
+    // setData((list)=>[...list,datas])
+    setData(datas)
+    console.log(socket)
+    console.log(datas)
+    // setChange(datas)
+})
+
+/*useEffect( ()=>{
+    
+    socket.on("receive_data",(datas)=>{
+        setData((list)=>[...list,datas])
+        console.log(socket)
+        console.log(datas)
+        setChange(datas)
+    })
+ },[change])*/
+
+const handleDelete = async (id) => {
+    await axios.delete('http://localhost:5000/fournisseur/'+id)
+    .catch(err=>console.log(err))
+    
+    await axios.get('http://localhost:5000/fournisseurs')
+    .then((res)=>{
+        //setAllData(res.data)
+        setData(res.data)
+        socket.emit("join_room",room)
+        // socket.emit("send_data",res.data)
+         socket.emit("predelete_data",res.data)
+
+       
     })
     .catch(err=>console.log(err))
+
+    console.log(data);
+    // socket.emit("join_room",room)
+    //socket.emit("send_data",data)
+    // await socket.emit("predelete_data",data)
 }
 
 

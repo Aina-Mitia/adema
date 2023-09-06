@@ -8,6 +8,8 @@ import { Button, Paper,Typography } from "@mui/material";
 import  Box  from "@mui/material/Box";
 import  Grid  from "@mui/material/Grid";
 import {Formik, Form,Field, ErrorMessage} from "formik"
+import io from "socket.io-client";
+
 
 
 const UpdateFournisseur = () => {
@@ -25,13 +27,19 @@ const [value, setValue] = useState({
 
 useEffect( ()=>{
     axios.get('http://localhost:5000/fournisseur/'+id)
-    .then(res=>setValue({...value, name:res.data[0].name, contact:res.data[0].contact, adress:res.data[0].adress, email:res.data[0].email, nif:res.data[0].nif, stat:res.data[0].stat
+    .then(res=>setValue({...value, name:res.data.name, contact:res.data.contact, adress:res.data.adress, email:res.data.email, nif:res.data.nif, stat:res.data.stat
     }))
     .catch(err=>console.log(err))
 },[])
+
+const socket = io.connect("http://localhost:5000") 
+
+const [room,setRoom] = useState("ok")
         
 const handleUpdate = (e) => {
     e.preventDefault();
+    socket.emit("join_room",room)
+    socket.emit("send_data",value)
     axios.put('http://localhost:5000/fournisseur/'+id , value)
         .then(res=>{
             console.log(res);
@@ -52,8 +60,8 @@ return(
         <Grid align="center" >
             <Typography variant="h6">Modification sur le fournisseur</Typography>
         </Grid>
-            <Formik onSubmit={handleUpdate}>
-                <Form noValidate>
+            <Formik >
+                <Form noValidate onSubmit={handleUpdate}>
             
             <Field as={TextField} fullWidth required
             name="name"

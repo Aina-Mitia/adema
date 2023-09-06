@@ -30,7 +30,7 @@ import UpdateProfil from './components/profil/updateprofil';
 import { useAuthContext } from './components/hooks/useAuthContext';
 import Auth from './components/auth/auth';
 
-// const socket = io.connect("http://localhost:5000") 
+ const socket = io.connect("http://localhost:5000") 
 
 function App() {
   const {user} = useAuthContext()//anamboarana ny protedtion route
