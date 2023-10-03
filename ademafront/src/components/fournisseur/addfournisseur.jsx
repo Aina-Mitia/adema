@@ -14,9 +14,10 @@ import io from "socket.io-client";
 
 
 
-const AddFournisseur = () =>{
+const AddFournisseur = (props) =>{
 
 const navigate = useNavigate();
+const {closeFunction} = props
 
 const [data, setData] = useState({
     name:"",
@@ -40,6 +41,8 @@ const handleSubmit = (e) => {
             navigate("/fournisseur");
         })
         .catch(err=>console.log(err))
+
+    closeFunction()
 }
 
 const paperStyle = { padding: "40px 20px", width: 750, margin: "20px auto"}

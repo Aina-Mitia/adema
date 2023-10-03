@@ -14,9 +14,11 @@ import io from "socket.io-client";
  
 
 
-const AddAppareil = () =>{
+const AddAppareil = (props) =>{
 
 const navigate = useNavigate();
+const {closeFunction} = props
+
 
 const [data, setData] = useState({
     name:"",
@@ -44,7 +46,8 @@ const handleSubmit = (e) => {
         })
         .catch(err=>console.log(err))
     
-        
+        closeFunction()
+    
     
 }
 

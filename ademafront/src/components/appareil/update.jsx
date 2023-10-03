@@ -17,7 +17,9 @@ import io from "socket.io-client";
 const UpdateAppareil = (props) => {
 
 //const {id} = useParams();
-const {idA} = props;
+const {closeFunction,idA} = props
+
+
 const navigate = useNavigate();
 const [value, setValue] = useState({
     name:"",
@@ -54,6 +56,8 @@ const handleUpdate = (e) => {
             navigate("/appareil");
         })
         .catch(err=>console.log(err))
+
+    closeFunction()
 }
 const paperStyle = { padding: "40px 20px", width: 750, margin: "20px auto"}
 const btnStyle = { marginTop:10}

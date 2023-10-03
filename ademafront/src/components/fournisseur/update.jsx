@@ -12,7 +12,9 @@ import io from "socket.io-client";
 
 
 
-const UpdateFournisseur = () => {
+const UpdateFournisseur = (props) => {
+
+    const {closeFunction} = props
 
 const {id} = useParams();
 const navigate = useNavigate();
@@ -46,6 +48,8 @@ const handleUpdate = (e) => {
             navigate("/fournisseur");
         })
         .catch(err=>console.log(err))
+
+    closeFunction()
 }
 
 const paperStyle = { padding: "40px 20px", width: 750, margin: "20px auto"}

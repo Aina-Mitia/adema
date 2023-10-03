@@ -10,19 +10,19 @@ import CloseIcon from "@mui/icons-material/Close"
 const DialogConfirm = (props) =>{
 
 
-    const {children, title, openDialogConfirm , setOpenDialogConfirm, action  } = props; 
+    const {children,  DialogConfirm , setDialogConfirm  } = props; 
 
     const [open,setOpen] = useState(false)
 
     return(
         <div>
-            <Dialog open={openDialogConfirm}>
+            <Dialog open={DialogConfirm.isOpen}>
                 <DialogTitle>
                     <div style={{display:"flex"}}>
                         <Typography variant="h6" component="div" style={{flexGrow:1}}>
-                            {title}
+                            {DialogConfirm.title}
                         </Typography>
-                        <Button onClick={()=>{setOpenDialogConfirm(false)}}>
+                        <Button onClick={()=>{setDialogConfirm({...DialogConfirm,isOpen:false})}}>
                             <CloseIcon/>
                         </Button>
                     </div>
@@ -31,8 +31,8 @@ const DialogConfirm = (props) =>{
                     {children}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={()=>{setOpenDialogConfirm(false)}}>NON</Button>
-                    <Button onClick={()=>{action()}}>OUI</Button>
+                    <Button onClick={()=>{setDialogConfirm({...DialogConfirm,isOpen:false})}}>NON</Button>
+                    <Button onClick={()=>{DialogConfirm.onConfirm}}>OUI</Button>
                 </DialogActions>
             </Dialog>
 

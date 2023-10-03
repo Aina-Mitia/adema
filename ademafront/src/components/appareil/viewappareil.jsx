@@ -29,7 +29,7 @@ const [select,setSelect]=useState("toutes")
 const socket = io.connect("http://localhost:5000") 
 const {entity} = useEntity()
 const {user} = useAuthContext()
-
+const {confirmDialog,setConfirmDialog} = useState({isOpen:false, title:''})
 
 
 
@@ -112,7 +112,9 @@ const [openConfirm,setOpenConfirm] = useState(false)
 const [openRead,setOpenRead] = useState(false)
 const [openUpdate,setOpenUpdate] = useState(false)
 
-
+const closeDialog = () =>{
+    setOpenAdd(false)
+}
 
 
 
@@ -224,20 +226,16 @@ return(
                             
                             <IconButton onClick={(e)=>{
                                 e.preventDefault();
-                                setOpenConfirm(true)
+                                setConfirmDialog({
+                                    isOpen:true,
+                                    title:'Etes-vous sure de supprimer?',
+                                    onConfirm:()=>{handleDelete(item._id)}
+                                })
                                
                                 }}>
                                 <DeleteRoundedIcon/>
                             </IconButton>
-                            <DialogConfirm
-                            title="Suppression"
-                            openDialogConfirm={openConfirm}
-                            setOpenDialogConfirm={setOpenConfirm}
-                            action={handleDelete(item._id)}
                             
-                            >
-                                Etes-vous sure de supprimer?
-                            </DialogConfirm>
                             </Stack>
                         </TableCell>
                     </TableRow>
@@ -253,8 +251,17 @@ return(
         openDialog={openAdd}
         setOpenDialog={setOpenAdd}
         >
-            <AddAppareil/>
+            <AddAppareil closeFunction={closeDialog}/>
         </DialogComponent>
+        <DialogConfirm
+        
+        DialogConfirm={confirmDialog}
+        setOpenDialogConfirm={setConfirmDialog}
+        
+        
+        >
+            Etes-vous sure de supprimer?
+        </DialogConfirm>
         
     </div>
 )

@@ -12,6 +12,8 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded"
 import LibraryBooksRoundedIcon from "@mui/icons-material/LibraryBooksRounded"
 import Typography from "@mui/material/Typography";
 import io from "socket.io-client";
+import DialogConfirm from "../dialog/confirmdialog";
+
 
 
 
@@ -94,8 +96,6 @@ const handleDelete = async (id) => {
     // await socket.emit("predelete_data",data)
 }
 
-
-
 const handlebutton = (e) => {
     e.preventDefault()
     const choix= e.target.value;
@@ -115,6 +115,8 @@ const handlebutton = (e) => {
         //data[0][nom_fournisseur]
         
 }
+const {confirmDialog,setConfirmDialog} = useState({isOpen:false, title:''})
+
 
 /*const handlechangeselect = (e) => {
     const choix= e.target.value;
@@ -190,7 +192,15 @@ return(
                                 <EditRoundedIcon/>
                             </Link>
                             </IconButton>
-                            <IconButton onClick={()=>{handleDelete(item._id)}}>
+                            <IconButton onClick={(e)=>{
+                                e.preventDefault();
+                                setConfirmDialog({
+                                    isOpen:true,
+                                    title:'Etes-vous sure de supprimer?',
+                                    onConfirm:()=>{handleDelete(item._id)}
+                                })
+                               
+                                }}>
                                 <DeleteRoundedIcon/>
                             </IconButton>
                             </Stack>
@@ -202,6 +212,16 @@ return(
         </TableContainer>
         </Paper>
      
+        <DialogConfirm
+                            
+        DialogConfirm={confirmDialog}
+        setOpenDialogConfirm={setConfirmDialog}
+        
+        
+        >
+            Etes-vous sure de supprimer?
+        </DialogConfirm>
+
     </div>
 )
 };
