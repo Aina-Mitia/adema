@@ -9,8 +9,10 @@ import Home from './components/home/home';
 //import { Main } from './main';
 //import Navbar from './navbar';
 import { Route, Routes} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import SignUp from './components/signup/signup';
 import Login from './components/login/login';
+import LoginAdmin from './components/login/loginAdmin'
 import io from "socket.io-client"
 //import { ToastContainer } from 'react-toastify';
 
@@ -29,11 +31,16 @@ import Profil from './components/profil/profil';
 import UpdateProfil from './components/profil/updateprofil';
 import { useAuthContext } from './components/hooks/useAuthContext';
 import Auth from './components/auth/auth';
+import { useEntity } from './components/hooks/useEntity';
 
  const socket = io.connect("http://localhost:5000") 
 
 function App() {
-  const {user} = useAuthContext()//anamboarana ny protedtion route
+  const {user} = useAuthContext() //anamboarana ny protedtion route
+  const {entity} = useEntity()
+  const navigate = useNavigate();
+
+
  /* 
    const joinRoom = ()=>{
      socket.emit("join_room",data)  // dans le handleSubmit frontend login
@@ -72,7 +79,11 @@ function App() {
    et dans le callBack de ce dernier, on va faire un socket.to(<id_reference>).emit("recevoir") 
    et on met un socket.on("recevoir")
    dans le front dans un useEffect(). Et on fait aussi un setData useState dans la fontion d'envoye de message  
-  */
+  
+  couleur vert
+  #33FF46
+  #33FF58
+   */
 
   return (
     <div className="App">
@@ -84,6 +95,8 @@ function App() {
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/auth" element={<Auth/>}/>
+        <Route path="/login/admin" element={<LoginAdmin/>}/>
+
 
         
         <Route path="/appareil" element={<ViewAppareil />}/>
@@ -92,9 +105,9 @@ function App() {
         <Route path="/appareil/delete/:id" element={<ViewAppareil />}/>
         <Route path="/appareil/view/:id" element={<SingleViewAppareil />}/>
 
-        <Route path="/fournisseur" element={<ViewFournisseur />}/>
-        <Route path="/fournisseur/add" element={<AddFournisseur />}/>
-        <Route path="/fournisseur/update/:id" element={<UpdateFournisseur />}/>
+        <Route path="/fournisseur" element={ <ViewFournisseur /> }/>
+        <Route path="/fournisseur/add" element={ <AddFournisseur />}/>
+        <Route path="/fournisseur/update/:id" element={ <UpdateFournisseur />}/>
         <Route path="/fournisseur/delete/:id" element={<ViewFournisseur />}/>
         <Route path="/fournisseur/view/:id" element={<SingleViewFournisseur />}/>
 

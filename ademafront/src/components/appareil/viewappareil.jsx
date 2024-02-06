@@ -27,7 +27,6 @@ const [data,setData] = useState([]);
 const [allData,setAllData] = useState([])
 const [select,setSelect]=useState("toutes")
 const socket = io.connect("http://localhost:5000") 
-const {entity} = useEntity()
 const {user} = useAuthContext()
 const {confirmDialog,setConfirmDialog} = useState({isOpen:false, title:''})
 
@@ -55,7 +54,7 @@ useEffect( ()=>{
     })
 
     if (user.role==="fournisseur"){
-        axios.post('http://localhost:5000/appareil/fournisseur',entity.name) 
+        axios.post('http://localhost:5000/appareils',user.name) 
     .then((res)=>{
         //setAllData(res.data)
         setData(res.data)

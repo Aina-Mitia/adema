@@ -32,7 +32,7 @@ const DialogConfirm = (props) =>{
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={()=>{setDialogConfirm({...DialogConfirm,isOpen:false})}}>NON</Button>
-                    <Button onClick={()=>{DialogConfirm.onConfirm}}>OUI</Button>
+                    <Button onClick={()=>{DialogConfirm.onConfirm()}}>OUI</Button>
                 </DialogActions>
             </Dialog>
 

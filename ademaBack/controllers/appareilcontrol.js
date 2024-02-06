@@ -115,6 +115,20 @@ export const getApp = async (req,res) =>{
     }
 
 }
+export const getInformationFournisseur = async () => {
+    
+    try{
+    const name = req.body
+    const fournisseur = await Appareil.find({nom_fournisseur: name})
+    res.status(200).json(fournisseur)
+
+    } catch (error) {
+       console.log(error) 
+       res.status(500).json({message: error.message})
+
+    }
+
+}
 
 
 //const express = require("express");

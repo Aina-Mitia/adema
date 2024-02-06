@@ -25,13 +25,13 @@ import { useAuthContext } from "./useAuthContext"
             
         })*/
             const response = await axios.post("http://localhost:5000/signup",data)
-            const json = await response.json()
+            //const json = await response.json()
             /*if (!response.ok){
                 setErrorSignup("error")
             }*/
             if (response.status === 200){
-                 localStorage.setItem('user',JSON.stringify(json))
-                 dispatch({type:"user",payload:json})
+                 localStorage.setItem('user',response)
+                 dispatch({type:"user",payload:response})
             } 
         }
 

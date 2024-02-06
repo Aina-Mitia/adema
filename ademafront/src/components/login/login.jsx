@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NavbarHome from '../navbar/navbarhome';
 import { useState } from "react";
 import { useLogin } from '../hooks/useLogin';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useGetContext } from '../hooks/useGetContext';
 import { useEntity } from '../hooks/useEntity';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import './login.css';
+import Img from './adema2.jpg'
 
 
 
@@ -35,9 +38,9 @@ const Login = () => {
           navigate("/login");
         }
     }).catch(err=>console.log(err))
-},[])*/
+  },[])*/
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault()
     /*axios.post("http://localhost:5000/login",value).then(res=>{
       if (res.data.Login ){
@@ -46,11 +49,14 @@ const Login = () => {
       }else {
         alert("error")
       }
-    }).catch(err=>console.log(err))*/
+    }).catch(err=>console.log(err))
+    */
     console.log(value);
-    await login(value);
-    await getEntity(value.email)
-    await console.log(user)
+     login(value);
+     getEntity(value.email)
+     navigate("/")
+     console.log(user)
+    
     
     if (value.email == 0 || value.password==0){
       setError(true)
@@ -62,66 +68,99 @@ const Login = () => {
   
 return (
   <div>
-      <NavbarHome/>
-      <div className="d-flex vh-100 bg-secondary justify-content-center align-items-center">
-        <div className="w-50 bg-white rounded p-3">
-      <form onSubmit={handleSubmit}>
-        <h3>Sign In</h3>
-
-        <div className="mb-2">
-          <label>Email address</label>
-          <input
-            name="email"
-            id="email"
+    <Stack>
+      <form onSubmit={handleSubmit} >
+      
+      <Box
+        display="flex"
+        flexDirection={"column"}
+        maxWidth={400}
+        position="relative"
+        top="100px"
+        left="300px"
+        alignItems="center"
+        justifyContent={"center"}
+        className="login"
+        margin="auto"
+        marginTop="auto"
+        padding={3}
+        borderRadius={5}
+        boxShadow={"5px 5px 10px #ccc"}
+        sx={{
+          ":hover":{
+            boxShadow:'10px 10px #ccc'
+          },
+          backgroundColor:'#E5E4E4'
+        }}
+        >
+        <Typography variant='h4' padding={3} textAlign='center'>
+          Connexion
+          </Typography>  
+          
+          <TextField
+            margin="normal"
             type="text"
-            className="form-control"
-            placeholder="Enter email"
+            placeholder="Email"
             value={value.email}
             onChange={(e)=>{setValue({...value, email: e.target.value})}}
           />
           {error && value.email == 0 ? <label>champ non rempli</label> : ""
 
           }
-        </div>
+        
 
-        <div className="mb-2">
-          <label>Password</label>
-          <input
-            id="password"
-            name="password"          
+        
+          <TextField
+            margin="normal"       
             type="password"
-            className="form-control"
-            placeholder="Enter password"
+            placeholder="Mot de passe"
             value={value.password}
             onChange={(e)=>{setValue({...value, password: e.target.value})}}
           />
           {error && value.password == 0 ? <label>champ non rempli</label> : ""}
-        </div>
+        
 
        
 
-        <div className="d-grid">
-          <button type="submit" className="btn btn-success"  
+          <Button type="submit" variant="contained" 
+          sx={{marginTop:3, borderRadius:3}} 
+          
           disabled={
             value.email.length==0 ||
             value.password.length==0 
           }>
           Se connecter
-          </button>
-        </div>
-        <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
-        </p>
+          </Button>
+          <Button type="submit" variant="contained" 
+          
+          sx={{marginTop:3, borderRadius:3,backgroundColor:"#17CF1A"}} 
+          >
+          S'inscrire
+          </Button>
+        </Box>
       </form>
       
-      <div className="d-grid">
-          <button type="submit" className="btn btn-primary" >
-            S'inscrire
-          </button>
-        </div>
-      </div>
-      </div>
+      <Box 
+      position="absolute"
+      left="130px"    
+      top="180px"    
+      bottom="80px"
+      >
         
+        <img src={Img} height="80px" width="80px" title='logo' alt='logo'></img>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <Typography variant="h4" component="div" color="black" align="center" gutterBottom>
+          Bienvenue cher fournisseur
+        </Typography>
+        <Typography variant="body1" color="black" align="center">
+          Découvrez toutes les fonctionnalités  que nous offrons.
+        </Typography>
+       
+      </Box>
+      </Stack>
       </div>
     )
   }

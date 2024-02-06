@@ -23,7 +23,7 @@ export const loginUser = async (req,res) => {
 
 export const getAppareilFournisseur = (req,res) =>{
     try {
-        const {email} = req.body.email
+        const {email} = req.body
         const fournisseur = getFournisseur(email)
         res.status(200).json(fournisseur)
 

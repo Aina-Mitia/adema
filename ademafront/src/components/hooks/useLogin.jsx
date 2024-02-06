@@ -32,7 +32,7 @@ import { useAuthContext } from "./useAuthContext"
             
         })*/
             const response = await axios.post("http://localhost:5000/login/user",data)
-            
+            //tsy ilaina ngamba
             //const json = await response.json()
             // on post d'abord email pour recuperer objet founisseur 
            // console.log(response.status);
@@ -44,6 +44,7 @@ import { useAuthContext } from "./useAuthContext"
             if (response.status === 200){
                  localStorage.setItem('admin',JSON.stringify(response))
                  dispatch({type:"admin",payload:response})
+                //  console.log(response.data.token)
             } 
         }
 

@@ -24,5 +24,5 @@ const adminFournisseur = mongoose.Schema(
     }
 )
 
-const FournisseurCompte = mongoose.model('admin',adminFournisseur)
+const FournisseurCompte = mongoose.model('adminFournisseur',adminFournisseur)
 export default FournisseurCompte;

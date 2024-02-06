@@ -1,14 +1,19 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from '../navbar/navbar'
-
+import Navbarhome from "../navbar/navbarhome";
+import { useEntity } from "../hooks/useEntity";
+import { useAuthContext } from "../hooks/useAuthContext";
+import {Card, CardContent, Grid, Typography} from '@mui/material'
 
 
 const Home = () => {
     const navigate = useNavigate();
     const [name,setName] = useState("");
+    const {user} = useAuthContext()
+    const {entity} = useEntity()
 
     //axios.defaults.withCredentials = true;
 
@@ -21,24 +26,44 @@ const Home = () => {
                 navigate("/login");
             }
         }).catch(err=>console.log(err))
-    },[])*/
+    },[])
+    
+    eo ambanin'ny div eo
+{user? <Navbar/>: entity?
+        <Navbarhome/>:navigate("/login")}
+    */
 
     return <div>
-        <Navbar/>
-     <form>
-        <h4>Bienvenue</h4>
-    <div>
-    <button type="submit" 
-    className="btn btn-outline-primary"
-    onClick={() =>{navigate('/appareil/add')}}>Inscription</button>
-     </div>
-     <p></p>
-     <div>
-    <button type="submit" 
-    className="btn btn-outline-primary"
-    onClick={() =>{navigate('/login')}}>Connexion</button>
-    </div>
-    </form>
+        <div>
+        <Navbarhome/>
+        </div>
+        <Grid>
+            <Link to='/appareil'>
+            <Card>
+                <CardContent>
+                    <Typography gutterBottom variant="h6" component='div'>
+                        Fournisseurs
+                    </Typography>
+                    <Typography  variant="body2" >
+                        Liste des fournisseurs
+                    </Typography>
+                </CardContent>
+            </Card>
+            </Link>
+            <Link to='/fournisseur'>
+            <Card>
+                <CardContent>
+                    <Typography gutterBottom variant="h6" component='div'>
+                       Materiels 
+                    </Typography>
+                    <Typography  variant="body2" >
+                        Liste des materiels
+                    </Typography>
+                </CardContent>
+            </Card>
+            </Link>
+        </Grid>
+    
     </div>
 }
 

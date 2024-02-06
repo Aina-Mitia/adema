@@ -91,6 +91,8 @@ export const deleteFournisseur = async (req,res) =>{
 
 
 
+
+
 //const express = require("express"); 
 
 /*import pool from "../server.js"

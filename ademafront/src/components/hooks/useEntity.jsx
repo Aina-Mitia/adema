@@ -1,6 +1,7 @@
 import { useState } from "react"
 import axios from 'axios'
 import { useGetContext } from "./useGetContext"
+import { useAuthContext } from "./useAuthContext"
 
     export const useEntity = () =>{
 
@@ -10,6 +11,7 @@ import { useGetContext } from "./useGetContext"
 
         const [errorLogin,setErrorLogin] = useState(null)
         const {dispatch} = useGetContext()
+        const {user} = useAuthContext()
 
         const getEntity = async (data)=>{
             
@@ -41,9 +43,15 @@ import { useGetContext } from "./useGetContext"
                 console.log("no");
                 
             }*/
-            if (response.status === 200){
-                 dispatch({type:"isGet",payload:response})
-            } 
+             if (response.status === 200){
+                  dispatch({type:"isGet",payload:response})
+             } 
+            // if (user.email===response.email){
+            //     console.log('nice')
+            // } else {
+            //     console.log('no nice');
+            // }
+            
         }
 
         const getEntityAdmin = async (data)=>{
@@ -79,6 +87,11 @@ import { useGetContext } from "./useGetContext"
             if (response.status === 200){
                  dispatch({type:"isGet",payload:response})
             } 
+            // if (user.email===response.email){
+            //     console.log('nice')
+            // } else {
+            //     console.log('no nice');
+            // }
         }
 
         return {getEntity,getEntityAdmin,errorLogin}
