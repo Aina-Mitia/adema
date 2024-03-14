@@ -5,7 +5,7 @@ import http from "http"
 const app = express();
 // import mariadb from "mariadb";
 import appareilRoute from "./routes/appareil.js";
-import fournisseurRoute from "./routes/fournisseur.js";
+import newfournisseurRoute from "./routes/newfournisseur.js";
 import signup from "./routes/signup.js"
 import login from "./routes/login.js"
 //import signUpRoute from "./routes/signup.js"
@@ -59,7 +59,7 @@ server.listen(5000, ()=>{
 })
 
 
-io.on("connection",(socket)=>{
+/*io.on("connection",(socket)=>{
     console.log(socket.id);
 
     socket.on("join_room",(data)=>{
@@ -78,7 +78,7 @@ io.on("connection",(socket)=>{
         socket.to("ok").emit("delete_data",datas)
     })
     
-})
+})*/
 
 
 //const authRoute = require('./routes/auth');
@@ -97,7 +97,7 @@ io.on("connection",(socket)=>{
 //app.use(cookieParser());
 
 app.use("/",appareilRoute);
-app.use("/",fournisseurRoute);
+app.use("/",newfournisseurRoute);
 app.use("/",signup)
 app.use("/",login)
 

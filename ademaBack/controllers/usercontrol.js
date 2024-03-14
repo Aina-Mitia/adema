@@ -15,15 +15,32 @@ export const login = async (email, password) =>{
         throw Error("email incorrect")
     }
 
-    const match = await bcrypt.compare(password, admin.password)
-    if (!match){
+    //const match = await bcrypt.compare(password, admin.password)
+    if (password !== admin.password){
+        throw Error("mot de passe incorrect")
+    }
+    return admin
+}
+export const loginF = async (email, password) =>{
+    const admin = await FournisseurCompte.findOne({email})
+
+    if(!email || !password){
+        throw Error("champs non complet")
+    }
+
+    if (!admin){
+        throw Error("email incorrect")
+    }
+
+    //const match = await bcrypt.compare(password, admin.password)
+    if (password !== admin.password){
         throw Error("mot de passe incorrect")
     }
     return admin
 }
 
 
-export const signup = async (firstName,lastName, email, password) =>{  //mbola mila amboarina
+export const signup = async (name,lastname, email, password) =>{  //mbola mila amboarina
 
     if(!email || !password){
         throw Error("champs non complet")
@@ -41,10 +58,36 @@ export const signup = async (firstName,lastName, email, password) =>{  //mbola m
         throw Error("email deja utilise")
     }
 
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(password,salt)
+    //const salt = await bcrypt.genSalt(10)
+    //const hash = await bcrypt.hash(password,salt)
     
-    const appareil = await Admin.create({firstName,lastName, email, password: hash})
+    const appareil = await Admin.create({name,lastname, email, password})
+
+    return appareil
+
+}
+export const signupF = async (name,lastname, email, password) =>{  //mbola mila amboarina
+
+    if(!email || !password){
+        throw Error("champs non complet")
+    }
+    if(!validator.isEmail(email)){
+        throw Error("email non valide")
+    }
+   /* if(!validator.isStrongPassword(password)){
+        throw Error("mot de passe trop court")
+    }*/
+
+    const exist = await FournisseurCompte.findOne({email})
+
+    if (exist) {
+        throw Error("email deja utilise")
+    }
+
+    //const salt = await bcrypt.genSalt(10)
+    //const hash = await bcrypt.hash(password,salt)
+    
+    const appareil = await FournisseurCompte.create({name,lastname, email, password})
 
     return appareil
 

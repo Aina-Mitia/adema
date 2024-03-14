@@ -1,10 +1,10 @@
-import Fournisseur from "../models/fournisseurmodel.js";
+import Fournisseur from "../models/newfournisseur.js"
 
 
 export const createFournisseur = async (req,res) => {
     
     
-    //const { name, contact, adress, email, nif, stat } = req.body;
+    
     try {
         const fournisseur = await Fournisseur.create(req.body)
         res.status(200).json(fournisseur) 

@@ -11,18 +11,17 @@ import  Box  from "@mui/material/Box";
 import  Grid  from "@mui/material/Grid";
 import {Formik, Form,Field, ErrorMessage} from "formik"
 import Navbarhome from "../navbar/navbarhome";
-import { useGetContext } from '../hooks/useGetContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 
 
 
 
+const UpdateProfilAdmin = () =>{
 
-const UpdateProfil = () =>{
-    const {entity} = useGetContext()
 const [data,setData] = useState([]);
+const {user} = useAuthContext()
 
-const {id} = useParams();
 const navigate = useNavigate();
 const [value, setValue] = useState({
     name :"",
@@ -30,11 +29,9 @@ const [value, setValue] = useState({
     email :"",
     password :""
 })
-/* router.post("/admin/getcompte",getSingleCompteAdmin)
 
-router.post("/fournisseur/getcompte",getSingleCompteFournisseur)*/
 const actif = async ()=>{
-    await axios.post('http://localhost:5000/fournisseur/getcompte',{
+    await axios.post('http://localhost:5000/admin/getcompte',{
         email: entity.data.email
       })
     .then(res=>setValue({...value, name:res.data.name,lastname:res.data.lastname, email:res.data.email, password:res.data.password
@@ -43,15 +40,16 @@ const actif = async ()=>{
 }
 
 useEffect( ()=>{
-    if (entity){
-    actif()
+    if (user){
+        actif()
     }
+    
 },[])
         
 const handleUpdate = async (e) => {
     e.preventDefault();
-    await axios.put('http://localhost:5000/fournisseur/singlecompte',{
-        email: entity.data.email,
+   await axios.put('http://localhost:5000/admin/singlecompte',{
+        email: user.data.email,
         value: value
       }).then(res=>{
             console.log(res);
@@ -85,7 +83,20 @@ return(
                 style={Style}
                 label="Nom"
                 variant="outlined"
+                value={value.name}
                 onChange={(e)=>{setValue({...value, name: e.target.value})}}
+                />
+                </Grid>
+                <Grid item xs={6}>
+                <TextField
+            margin="normal" required
+                name="lastname"
+                id="lastname"
+                style={Style}
+                label="Prénom"
+                variant="outlined"
+                value={value.lastname}
+                onChange={(e)=>{setValue({...value, email: e.target.value})}}
                 />
                 </Grid>
                 <Grid item xs={6}>
@@ -94,30 +105,21 @@ return(
                 name="email"
                 id="email"
                 style={Style}
-                label="Prénom"
-                variant="outlined"
-                onChange={(e)=>{setValue({...value, email: e.target.value})}}
-                />
-                </Grid>
-                <Grid item xs={6}>
-                <TextField
-            margin="normal" required
-                name="contact"
-                id="contact"
-                style={Style}
                 label="E-mail"
                 variant="outlined"
+                value={value.email}
                 onChange={(e)=>{setValue({...value, contact: e.target.value})}}
                 />
                 </Grid>
                 <Grid item xs={6}>
                 <TextField
             margin="normal" required
-                name="adress"
-                id="adress"
+                name="mot de passe"
+                id="mot de passe"
                 style={Style}
                 label="Mot de passe"
                 variant="outlined"
+                value={value.password}
                 onChange={(e)=>{setValue({...value, adress: e.target.value})}}
                 />
                 
@@ -142,4 +144,4 @@ return(
 )
 }
 
-export default UpdateProfil;
+export default UpdateProfilAdmin;

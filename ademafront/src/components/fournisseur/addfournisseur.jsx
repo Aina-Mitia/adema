@@ -6,18 +6,18 @@ import {  useParams,useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from '../navbar/navbar'
 import  TextField  from "@mui/material/TextField"; //il faut importer
-import { Button, Paper, Typography } from "@mui/material";
+import { Button, Paper, Typography,Stack } from "@mui/material";
 import  Box  from "@mui/material/Box";
 import  Grid  from "@mui/material/Grid";
 import {Formik, Form,Field, ErrorMessage} from "formik"
-import io from "socket.io-client";
+//import io from "socket.io-client";
 
 
 
-const AddFournisseur = (props) =>{
+const AddFournisseur = () =>{
 
 const navigate = useNavigate();
-const {closeFunction} = props
+
 
 const [data, setData] = useState({
     name:"",
@@ -27,27 +27,21 @@ const [data, setData] = useState({
     nif:"",
     stat:""
 });
-const socket = io.connect("http://localhost:5000") 
 
-const [room,setRoom] = useState("ok")
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit("join_room",room)
-    socket.emit("send_data",data)
-    axios.post('http://localhost:5000/fournisseur',data)
+    axios.post('http://localhost:5000/fournisseurr',data)
         .then(res=>{
             console.log(res);
             navigate("/fournisseur");
         })
         .catch(err=>console.log(err))
-
-    closeFunction()
 }
 
-const paperStyle = { padding: "40px 20px", width: 750, margin: "20px auto"}
+const paperStyle = { padding: "40px 20px", width: 750, margin: "auto" ,position:"relative",top:"80px"}
 const btnStyle = { marginTop:10}
-const Style = { marginBottom:50}
+const Style = { width: "300px"}
 
 return(
     <div>        
@@ -59,57 +53,80 @@ return(
         </Grid>
             <Formik >
                 <Form noValidate onSubmit={handleSubmit}>
-         
-                <Field as={TextField} fullWidth required
+                <Grid container spacing={2}>
+                <Grid item xs={6}>
+                <TextField
+            margin="normal" required
                 name="name"
                 id="name"
+                style={Style}
                 label="Nom du fournisseur"
                 variant="outlined"
                 onChange={(e)=>{setData({...data, name: e.target.value})}}
                 />
-                
-                <Field as={TextField} fullWidth required
+                </Grid>
+                <Grid item xs={6}>
+                <TextField
+            margin="normal" required
+                name="email"
+                id="email"
+                style={Style}
+                label="E-mail"
+                variant="outlined"
+                onChange={(e)=>{setData({...data, email: e.target.value})}}
+                />
+                </Grid>
+                <Grid item xs={6}>
+                <TextField
+            margin="normal" required
                 name="contact"
                 id="contact"
+                style={Style}
                 label="Contact"
                 variant="outlined"
                 onChange={(e)=>{setData({...data, contact: e.target.value})}}
                 />
-                
-                
-                <Field as={TextField} fullWidth required
+                </Grid>
+                <Grid item xs={6}>
+                <TextField
+            margin="normal" required
                 name="adress"
                 id="adress"
+                style={Style}
                 label="Adresse du fournisseur"
                 variant="outlined"
                 onChange={(e)=>{setData({...data, adress: e.target.value})}}
                 />
                 
                 
-                <Field as={TextField} fullWidth required
-                name="email"
-                id="email"
-                label="E-mail"
-                variant="outlined"
-                onChange={(e)=>{setData({...data, email: e.target.value})}}
-                />
+                </Grid>
+                <Grid item xs={6}>
+                
                
-               <Field as={TextField} fullWidth required
+               <TextField
+            margin="normal" required
                 name="nif"
                 id="nif"
+                style={Style}
                 label="NIF"
                 variant="outlined"
                 onChange={(e)=>{setData({...data, nif: e.target.value})}}
                 />
-                
-                <Field as={TextField} fullWidth required
+                </Grid>
+                <Grid item xs={6}>
+                <TextField
+            margin="normal" required
                 name="stat"
                 id="stat"
+                style={Style}
                 label="STAT"
                 variant="outlined"
                 onChange={(e)=>{setData({...data, stat: e.target.value})}}
                 />
-                <Button color="primary" variant="contained" style={btnStyle} type="submit"
+                
+                </Grid>
+                </Grid>
+                <Button color="primary" variant="contained" style={btnStyle} sx={{backgroundColor:"#F1513B"}} type="submit"
                 disabled={data.name.length==0 ||
                     data.contact.length==0 ||
                     data.adress.length==0 ||

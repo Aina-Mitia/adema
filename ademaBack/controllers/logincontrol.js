@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
-import { getAdmin, getFournisseur, login } from "./usercontrol.js";
+import { getAdmin, getFournisseur, login, loginF } from "./usercontrol.js";
 
 export const createToken = (_id) => {
     return jwt.sign({_id},"secret-key",{expiresIn:'3d'})
@@ -11,6 +11,20 @@ export const loginUser = async (req,res) => {
 
     try {
        const user = await login(email,password)
+       
+       const token =  createToken(user._id)
+       res.status(200).json({email,token})
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+
+}
+export const loginFournisseur = async (req,res) => {
+    const {email,password} = req.body
+
+    try {
+       const user = await loginF(email,password)
        
        const token =  createToken(user._id)
        res.status(200).json({email,token})

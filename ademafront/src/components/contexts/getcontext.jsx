@@ -1,4 +1,4 @@
-import { createContext,useReducer } from "react";
+import { createContext,useReducer,useEffect } from "react";
 
 export const GetContext = createContext()
 
@@ -20,6 +20,12 @@ export const GetContextProvider = ({children})=>{
         entity:null
     })
 
+    useEffect(()=>{
+        const user = JSON.parse(localStorage.getItem('entity'))
+        if (user){
+            dispatch({type:'isGet',payload:user})
+        }
+    },[])
     console.log("GetContext state:",state)
 
     return (

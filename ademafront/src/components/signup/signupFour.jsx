@@ -9,66 +9,43 @@ import { useGetContext } from '../hooks/useGetContext';
 import { useEntity } from '../hooks/useEntity';
 import { Box, Button, TextField, Typography, Stack } from '@mui/material';
 import Img from './adema2.jpg'
-import { useLoginF } from '../hooks/useLoginFournisseur';
+import {useSignupFour} from '../hooks/useSignupFour'
 
 
-const LoginAdmin = () => {
-  const { loginFournisseur} = useLoginF() 
+const SignupF = () => {
   const navigate = useNavigate()
   const [error,setError] = useState(false)
-  const {user} = useAuthContext()
   const {entity} = useGetContext()
-  const {getEntityAdmin} =useEntity()
+  const {signupFour} = useSignupFour()
 
-  // axios.defaults.withCredentials = true;
+  
   const [value, setValue] = useState({
+    name:"",
+    lastname:"",
     email:"",
     password:""
   });
   
-  //axios.defaults.withCredentials = true;
-
-  /*useEffect(()=>{
-    axios.get("http://localhost:5000")
-    .then( res =>{
-        if (res.data.valid){
-          navigate("/");
-        } else {
-          navigate("/login");
-        }
-    }).catch(err=>console.log(err))
-},[])*/
-
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    /*axios.post("http://localhost:5000/login",value).then(res=>{
-      if (res.data.Login ){
-        alert("ok")
-        navigate("/appareil")
-      }else {
-        alert("error")
-      }
-    }).catch(err=>console.log(err))*/
-    console.log(value);
-    await loginFournisseur(value);
+    e.preventDefault();
+    /*axios.post("http://localhost:5000/signupFournisseur",value)
+    .then(
+        navigate("/")
+        )*/
+    await signupFour(value)
     setTimeout(() => {
       navigate("/")
     }, 3000); 
-    //await getEntityAdmin(value.email)
-    await console.log(entity)
-    
-    if (value.email == 0 || value.password==0){
-      setError(true)
-    }
-
   }
   
+
   
   
 return (
-  <div>
-      
-    <Stack>
+    <div>
+            
+            <Stack>
+       
       <form onSubmit={handleSubmit} >
       
       <Box
@@ -76,8 +53,8 @@ return (
         flexDirection={"column"}
         maxWidth={400}
         position="relative"
-        top="100px"
-        left="300px"
+        top="20px"
+        left="auto"
         alignItems="center"
         justifyContent={"center"}
         className="login"
@@ -93,10 +70,24 @@ return (
           backgroundColor:'#E5E4E4'
         }}
         >
+          <img src={Img} height="50px" width="50px" title='logo' alt='logo'></img>
         <Typography variant='h4' padding={3} textAlign='center'>
-          Connexion
+          Inscription
           </Typography>  
-          
+          <TextField
+            margin="normal"
+            type="text"
+            placeholder="Nom"
+            onChange={(e)=>{setValue({...value, name: e.target.value})}}
+          />
+          <TextField
+            margin="normal"
+            type="text"
+            placeholder="Prénom"
+            value={value.lastname}
+            onChange={(e)=>{setValue({...value, lastname: e.target.value})}}
+          />
+
           <TextField
             margin="normal"
             type="text"
@@ -126,51 +117,28 @@ return (
           sx={{marginTop:3, borderRadius:3}} 
           
           disabled={
+            value.name.length==0 ||
+            value.lastname.length==0 ||
             value.email.length==0 ||
             value.password.length==0 
           }>
-          Se connecter
+          S'inscrire
           </Button>
           <Button  variant="contained" 
-                    onClick={()=>{navigate("/signup/fournisseur")}} 
+                    onClick={()=>{navigate("/login/admin")}} 
+
           sx={{marginTop:3, borderRadius:3,backgroundColor:"#17CF1A"}} 
           >
-          S'inscrire
+          Se connecter
           </Button>
         </Box>
       </form>
       
-      <Box 
-      position="absolute"
-      left="130px"    
-      top="180px"    
-      bottom="80px"
-      >
-        
-        <img src={Img} height="80px" width="80px" title='logo' alt='logo'></img>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <Typography variant="h4" component="div" color="black" align="center" gutterBottom>
-          Bienvenue cher fournisseur
-        </Typography>
-        <Typography variant="body1" color="black" align="center">
-          Découvrez toutes les fonctionnalités  que nous offrons.
-        </Typography>
-        <Typography variant="h8" color="black" align="center">
-          Veuillez cliquer ci-dessous si vous êtes un responsable à ADEMA pour se connecter.
-        </Typography>
-        <Button  variant="contained" 
-                    onClick={()=>{navigate("/login")}} 
-          sx={{position:'absolute', left:250,bottom:150, borderRadius:3,backgroundColor:"#17CF1A"}} 
-          >
-          Cliquez ici
-          </Button>
-      </Box>
-      </Stack>   
-      </div>
+     
+      </Stack>
+      
+    </div>
     )
   }
 
-  export default LoginAdmin;
+  export default SignupF;

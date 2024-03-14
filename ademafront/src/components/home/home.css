@@ -1,0 +1,13 @@
+.root {
+    margin-top: 20px; /* Ou toute autre valeur de marge souhaitée */
+  }
+  
+  .card {
+    max-width: 345px;
+    margin: 20px; /* Ou toute autre valeur de marge souhaitée */
+  }
+  
+  .media {
+    height: 140px; /* Ou toute autre hauteur souhaitée pour l'image */
+  }
+  

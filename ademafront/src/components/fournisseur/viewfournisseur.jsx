@@ -3,7 +3,6 @@ import { useState } from "react";
 import {  useParams, Link ,useNavigate} from "react-router-dom";
 import axios from "axios";
 import Navbar from '../navbar/navbar'
-import AddAppareil from "../appareil/addappareil";
 import{Table,TableContainer, Paper,TableHead, TableBody,TableRow,TableCell} from '@mui/material'
 import { Button,IconButton,Stack } from "@mui/material";
 import { Box,TextField,MenuItem } from "@mui/material";
@@ -11,7 +10,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded"
 import EditRoundedIcon from "@mui/icons-material/EditRounded"
 import LibraryBooksRoundedIcon from "@mui/icons-material/LibraryBooksRounded"
 import Typography from "@mui/material/Typography";
-import io from "socket.io-client";
+//import io from "socket.io-client";
 import DialogConfirm from "../dialog/confirmdialog";
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -24,7 +23,7 @@ const ViewFournisseur = () => {
 const [data,setData] = useState([]);
 const [allData,setAllData] = useState([])
 const [select,setSelect]=useState("toutes")
-const socket = io.connect("http://localhost:5000") 
+//const socket = io.connect("http://localhost:5000") 
 
 
 
@@ -32,13 +31,22 @@ const socket = io.connect("http://localhost:5000")
 const navigate= useNavigate()
 const [room,setRoom] = useState("ok")
 const [change,setChange] = useState(null)
+const [dialogOpen, setDialogOpen] = useState(false);
+const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+  const [datasearch,setDatasearch] = useState({name:""})
+
 
 useEffect( ()=>{
-    socket.emit("join_room",room)
+    //socket.emit("join_room",room)
 
     // code vaovao
 
-     axios.get('http://localhost:5000/fournisseurs')
+    axios.get('http://localhost:5000/fournisseurs')
     .then((res)=>{
         setAllData(res.data)
         setData(res.data)
@@ -52,7 +60,7 @@ useEffect( ()=>{
     })*/
 },[])
 
-socket.on("receive_data",(datas)=>{
+/*socket.on("receive_data",(datas)=>{
     setData((list)=>[...list,datas])
     console.log(socket)
     console.log(datas)
@@ -65,7 +73,7 @@ socket.on("delete_data",(datas)=>{
     console.log(socket)
     console.log(datas)
     // setChange(datas)
-})
+})*/
 
 /*useEffect( ()=>{
     
@@ -77,23 +85,23 @@ socket.on("delete_data",(datas)=>{
     })
  },[change])*/
 
-const handleDelete = async (id) => {
-    await axios.delete('http://localhost:5000/fournisseur/'+id)
+const handleDelete =  (id) => {
+     axios.delete('http://localhost:5000/fournisseur/'+id)
     .catch(err=>console.log(err))
     
-    await axios.get('http://localhost:5000/fournisseurs')
+    /*await axios.get('http://localhost:5000/fournisseurs')
     .then((res)=>{
-        //setAllData(res.data)
+        setAllData(res.data)
         setData(res.data)
-        socket.emit("join_room",room)
+        //socket.emit("join_room",room)
         // socket.emit("send_data",res.data)
-         socket.emit("predelete_data",res.data)
+        // socket.emit("predelete_data",res.data)
 
        
     })
-    .catch(err=>console.log(err))
+    .catch(err=>console.log(err))*/
 
-    console.log(data);
+    //console.log(data);
     // socket.emit("join_room",room)
     //socket.emit("send_data",data)
     // await socket.emit("predelete_data",data)
@@ -136,7 +144,7 @@ const {confirmDialog,setConfirmDialog} = useState({isOpen:false, title:''})
 return(
     <div>
         <Navbar/>
-        <Paper>
+        <Paper sx={{ width: '300px', overflow: 'hidden',marginTop:"auto" }}>
         <Typography variant="h3" gutterBottom></Typography> 
         <div >   
         <Link to="/fournisseur/add">
@@ -144,7 +152,7 @@ return(
         </Link>
         </div>
        
-       <Box width="250px">
+       <Box >
         <TextField value="toutes" label='selectionner la categorie' select fullWidth onChange={handlebutton}  >
             <MenuItem value="toutes">Toutes</MenuItem>
             <MenuItem value="electrique">Electrique</MenuItem>
@@ -153,17 +161,17 @@ return(
         </Box>
        
 
-        <TableContainer >
-            <Table aria-label="simple table">
+        <TableContainer sx={{ maxHeight: 440 }} >
+            <Table stickyHeader aria-label="sticky table">
             <TableHead>
                 <TableRow>
-                    <TableCell>Nom du fournisseur</TableCell>
-                    <TableCell>Contact</TableCell>
-                    <TableCell>adresse</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>NIF</TableCell>
-                    <TableCell>STAT</TableCell>
-                    <TableCell>Action</TableCell>
+                    <TableCell align="right" style={{minWidth:170}}>Nom du fournisseur</TableCell>
+                    <TableCell align="right" style={{minWidth:170}}>Contact</TableCell>
+                    <TableCell align="right" style={{minWidth:170}}>adresse</TableCell>
+                    <TableCell align="right" style={{minWidth:170}}>Email</TableCell>
+                    <TableCell align="right" style={{minWidth:170}}>NIF</TableCell>
+                    <TableCell align="right" style={{minWidth:170}}>STAT</TableCell>
+                    <TableCell align="right" style={{minWidth:170}}>Action</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -195,16 +203,17 @@ return(
                                 <EditRoundedIcon/>
                             </Link>
                             </IconButton>
-                            <IconButton onClick={(e)=>{
-                                e.preventDefault();
-                                setConfirmDialog({
-                                    isOpen:true,
-                                    title:'Etes-vous sure de supprimer?',
-                                    onConfirm:()=>{handleDelete(item._id)}
-                                })
-                               
-                                }}>
+                            <IconButton onClick={handleOpenDialog}>
                                 <DeleteRoundedIcon/>
+                                <DialogConfirm
+                                title="Suppression"
+                                onFormSubmit={handleDelete(item._id)}
+                                open={dialogOpen} 
+                                onClose={handleCloseDialog}
+                                
+                                >
+                                    Etes-vous sure de supprimer?
+                                </DialogConfirm>
                             </IconButton>
                             </Stack>
                         </TableCell>
@@ -215,15 +224,7 @@ return(
         </TableContainer>
         </Paper>
      
-        <DialogConfirm
-                            
-        DialogConfirm={confirmDialog}
-        setOpenDialogConfirm={setConfirmDialog}
         
-        
-        >
-            Etes-vous sure de supprimer?
-        </DialogConfirm>
 
     </div>
 )

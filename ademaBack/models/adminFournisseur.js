@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 
 const adminFournisseur = mongoose.Schema(
     {
-        firstName: {
+        name: {
             type : String
         },
-        lastName: {
+        lastname: {
             type : String,
             
         },

@@ -8,7 +8,7 @@ import { createFournisseur ,getFournisseurs, getSingleFournisseur, updateFournis
 import { getAppareilFournisseur, getFournisseurAppareil } from "../controllers/logincontrol.js";
 
 
-router.post("/admin", getFournisseurAppareil)
+/*router.post("/admin", getFournisseurAppareil)
 router.post("/fournisseur/appareil",getAppareilFournisseur)
  router.get("/fournisseurs",getFournisseurs)
  router.post("/fournisseur",createFournisseur)
@@ -17,7 +17,7 @@ router.get("/fournisseur/:id",getSingleFournisseur)
 router.delete("/fournisseur/:id",deleteFournisseur)
 router.put("/fournisseur/:id",updateFournisseur)
 
-export default router;
+export default router;*/
 
 // /*router.post('/', async (req,res) => {
 //     const { nomProduit, prix, nomFounisseur, description } = req.body;

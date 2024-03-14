@@ -14,6 +14,9 @@ const appareilSchema = mongoose.Schema(
         nom_fournisseur: {
             type : String
         },
+        email: {
+            type : String
+        },
         constructeur: {
             type : String
         },
@@ -21,9 +24,6 @@ const appareilSchema = mongoose.Schema(
             type : String
         },
         category: {
-            type : String
-        },
-        description: {
             type : String
         }
     }

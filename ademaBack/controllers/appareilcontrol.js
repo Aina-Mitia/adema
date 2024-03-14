@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Appareil from "../models/appareilmodel.js";
+import FournisseurCompte from "../models/adminFournisseur.js";
 
 
 export const createAppareil = async (req,res) => {
@@ -13,6 +14,7 @@ export const createAppareil = async (req,res) => {
         console.log(error);
         res.status(500).json({message: error.message})
     }
+
     
    /*
 const socket = io.connect("http://localhost:5000") 
@@ -24,6 +26,20 @@ const socket = io.connect("http://localhost:5000")
    */
 }
 
+export const searchFournisseur = async (req,res) =>{
+
+    try {
+        const fournisseur = await Appareil.find({name: req.body})
+        res.status(200).json(fournisseur) 
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: error.message})
+
+    }
+
+    
+}
 
 export const getAppareils = async (req,res) =>{
 
@@ -40,6 +56,22 @@ export const getAppareils = async (req,res) =>{
     
 }
 
+export const getAppareilFournisseur = async (req,res) =>{ 
+
+    try {
+        const {email} = req.body;
+        const fournisseur= await Appareil.find({email: email})
+        
+        res.status(200).json(fournisseur) 
+        
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message: error.message})
+
+    }
+
+    
+}
 
 export const getSingleAppareil = async (req,res) =>{
 

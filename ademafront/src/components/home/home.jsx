@@ -6,7 +6,8 @@ import Navbar from '../navbar/navbar'
 import Navbarhome from "../navbar/navbarhome";
 import { useEntity } from "../hooks/useEntity";
 import { useAuthContext } from "../hooks/useAuthContext";
-import {Card, CardContent, Grid, Typography} from '@mui/material'
+import { Card, CardActionArea, CardContent, CardMedia, Typography, Container, Grid } from '@mui/material';
+import "./home.css"
 
 
 const Home = () => {
@@ -35,34 +36,50 @@ const Home = () => {
 
     return <div>
         <div>
-        <Navbarhome/>
+        <Navbar/>
         </div>
-        <Grid>
-            <Link to='/appareil'>
-            <Card>
-                <CardContent>
-                    <Typography gutterBottom variant="h6" component='div'>
-                        Fournisseurs
-                    </Typography>
-                    <Typography  variant="body2" >
-                        Liste des fournisseurs
-                    </Typography>
-                </CardContent>
-            </Card>
-            </Link>
-            <Link to='/fournisseur'>
-            <Card>
-                <CardContent>
-                    <Typography gutterBottom variant="h6" component='div'>
-                       Materiels 
-                    </Typography>
-                    <Typography  variant="body2" >
-                        Liste des materiels
-                    </Typography>
-                </CardContent>
-            </Card>
-            </Link>
+        <Container className="root">
+      <Grid container justify="center" spacing={3}>
+        <Grid item>
+          <Card className="card">
+            <CardActionArea component="a" href="/page1">
+              <CardMedia
+                className="media"
+                image="https://via.placeholder.com/345x140"
+                title="Page 1"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Page 1
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Description de la page 1.
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
         </Grid>
+        <Grid item>
+          <Card className="card">
+            <CardActionArea component="a" href="/page2">
+              <CardMedia
+                className="media"
+                image="https://via.placeholder.com/345x140"
+                title="Page 2"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Page 2
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Description de la page 2.
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+      </Grid>
+    </Container>
     
     </div>
 }

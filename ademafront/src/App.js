@@ -9,7 +9,7 @@ import Home from './components/home/home';
 //import { Main } from './main';
 //import Navbar from './navbar';
 import { Route, Routes} from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import SignUp from './components/signup/signup';
 import Login from './components/login/login';
 import LoginAdmin from './components/login/loginAdmin'
@@ -22,7 +22,9 @@ import AddAppareil from './components/appareil/addappareil';
 import ViewAppareil from './components/appareil/viewappareil';
 import SingleViewAppareil from './components/appareil/singleviewappareil'
 import UpdateAppareil from './components/appareil/update';
-import ViewFournisseur from './components/fournisseur/viewfournisseur';
+import ViewAppareilAdema from './components/appareil/viewappareiladema'; //ViewAppareilAdema
+
+import ViewFournisseur from './components/fournisseur/newview';
 import AddFournisseur from './components/fournisseur/addfournisseur';
 import SingleViewFournisseur from './components/fournisseur/singleviewfournisseur';
 import UpdateFournisseur from './components/fournisseur/update';
@@ -32,12 +34,15 @@ import UpdateProfil from './components/profil/updateprofil';
 import { useAuthContext } from './components/hooks/useAuthContext';
 import Auth from './components/auth/auth';
 import { useEntity } from './components/hooks/useEntity';
-
- const socket = io.connect("http://localhost:5000") 
+import { useGetContext } from './components/hooks/useGetContext';
+import Navbar from './components/navbar/navbar';
+import SignupF from './components/signup/signupFour';
+import Profilfournisseur from './components/profil/profilfournisseur';
+ //const socket = io.connect("http://localhost:5000") 
 
 function App() {
   const {user} = useAuthContext() //anamboarana ny protedtion route
-  const {entity} = useEntity()
+  const {entity} = useGetContext()
   const navigate = useNavigate();
 
 
@@ -83,6 +88,9 @@ function App() {
   couleur vert
   #33FF46
   #33FF58
+
+  ireto avy no miala:
+
    */
 
   return (
@@ -91,14 +99,15 @@ function App() {
       
        
        <Routes>
-        <Route path="/" element={<Home/>}/>
+        <Route path="/" element={  entity? (<ViewAppareilAdema/>) : user? (<ViewAppareil/>) : (<Navigate to="/login"/>)}/>
         <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/signup/fournisseur" element={<SignupF/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/auth" element={<Auth/>}/>
         <Route path="/login/admin" element={<LoginAdmin/>}/>
 
 
-        
+        <Route path="/appareil/adema" element={<ViewAppareilAdema/>}/> 
         <Route path="/appareil" element={<ViewAppareil />}/>
         <Route path="/appareil/add" element={<AddAppareil />}/>
         <Route path="/appareil/update/:id" element={<UpdateAppareil />}/>
@@ -112,7 +121,8 @@ function App() {
         <Route path="/fournisseur/view/:id" element={<SingleViewFournisseur />}/>
 
         <Route path="/user" element={<Profil />}/>
-        <Route path="/user/update" element={<UpdateProfil />}/>
+        <Route path="/user/update/:id" element={<UpdateProfil />}/>
+        <Route path="/user/fournisseur" element={<Profilfournisseur />}/>
 
 
       </Routes>

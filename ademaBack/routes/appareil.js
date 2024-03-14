@@ -2,13 +2,16 @@ import express from "express";
 const router = express.Router();
 // //import pool from "../server.js"
 // import {getAppareils, createAppareil,searching, getSingleAppareil, deleteAppareil, updateAppareil} from "../controllers/appareilcontrol.js"
-import {createAppareil,getAppareils, getSingleAppareil, updateAppareil, deleteAppareil, getApp,getInformationFournisseur} from  "../controllers/appareilcontrol.js"
+
+import {createAppareil,getAppareils,getAppareilFournisseur, getSingleAppareil,searchFournisseur, updateAppareil, deleteAppareil, getApp,getInformationFournisseur} from  "../controllers/appareilcontrol.js"
 
 
 router.post("/appareil/fournisseur",getApp)
+router.post("/appareil/fournisseurperso",getAppareilFournisseur)
 router.get("/appareils",getAppareils)
 router.post("/appareils",getInformationFournisseur)
 router.post("/appareil",createAppareil)
+router.post("/appareil/search",searchFournisseur)
 router.get("/appareil/:id",getSingleAppareil)
 // router.post("/appareils",searching)
 // //router.get("/appareil",fournisseurdAppareil)

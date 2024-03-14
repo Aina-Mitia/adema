@@ -5,19 +5,20 @@ import {  useParams,useNavigate, Link } from "react-router-dom";
 //import { toast } from "react-toastify";
 import axios from "axios";
 import Navbar from '../navbar/navbar'
-import { Box, Button, Card, CardActions, CardContent, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Stack, Typography, Grid } from "@mui/material";
+import Navbarhome from "../navbar/navbarhome";
 
 
 
-const SingleViewAppareil = (props) =>{
+const SingleViewAppareil = () =>{
 
 const [data,setData] = useState([]);
 const {id} = useParams() ;
-const {idA} = props;
+//const {idA} = props;
 //idA=id;
 
 useEffect( ()=>{
-      axios.get('http://localhost:5000/appareil/'+idA)
+      axios.get('http://localhost:5000/appareil/'+id)
      .then(res=>setData(res.data))
      .catch(err=>console.log(err))
     // console.log(idA);
@@ -25,50 +26,117 @@ useEffect( ()=>{
     
 //constructeur, modele, description, category
 
+/*
+ name:"",
+    prix:"",
+    nombre:"",
+    nom_fournisseur:"",
+    constructeur:"",
+    modele:"",
+    category:"",
+    description:""
+*/
 return(
 <div>
-<Navbar/>
-<Box maxWidth="500px">
-    <Card >
-        <CardContent>
-            <Stack>
-            <Typography gutterBottom variant="subtitle">Nom du produit:</Typography>
-            <Typography variant="subtitle2">{data.name}</Typography>
-            </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">Prix:</Typography>
-            <Typography variant="subtitle2">{data.prix}</Typography>
-        </Stack>
-        <Stack>
-            <Typography gutterBottom variant="h8">Nombre:</Typography>
-            <Typography variant="subtitle2">{data.nombre}</Typography>
-        </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">Nom du fournisseur</Typography>
-            <Typography variant="subtitle2">{data.nom_fournisseur}</Typography>
-        </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">Constructeur:</Typography>
-            <Typography variant="subtitle2">{data.constructeur}</Typography>
-        </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">Modele:</Typography>
-            <Typography variant="subtitle2">{data.modele}</Typography>
-        </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">Categorie:</Typography>
-            <Typography variant="subtitle2">{data.category}</Typography>
-        </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">Description:</Typography>
-            <Typography variant="subtitle2">{data.description}</Typography>
-        </Stack>
-        </CardContent>
-        <CardActions>
-        <Button> <Link to="/appareil">Retour</Link></Button>
-        </CardActions>
-        </Card>
-        </Box>
+<Navbarhome/>
+<Card style={{ maxWidth: 400,  margin: 'auto', marginTop:50 }}>
+  <CardContent>
+    <Typography variant="h2" style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 16,color:"#17CF1A" }}>
+      Matériel
+    </Typography>
+    <Grid container spacing={2}>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16, fontWeight: 'bold',textAlign:"right" }}>
+          Nom :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.name}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16, fontWeight: 'bold',textAlign:"right" }}>
+          Prix :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.prix}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16, fontWeight: 'bold',textAlign:"right" }}>
+          Nombre :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.nombre}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16 , fontWeight: 'bold',textAlign:"right"}}>
+          Nom du fournisseur :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.nom_fournisseur}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16 , fontWeight: 'bold',textAlign:"right"}}>
+          Email du fournisseur :
+        </Typography>
+      </Grid>
+        <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.email}
+        </Typography>
+      </Grid>
+      
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16 , fontWeight: 'bold',textAlign:"right"}}>
+          Constructeur :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.constructeur}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16 , fontWeight: 'bold',textAlign:"right"}}>
+          Modèle :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.modele}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16 , fontWeight: 'bold',textAlign:"right"}}>
+          Catégorie :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.category}
+        </Typography>
+      </Grid>
+     
+      
+    </Grid>
+    <Button type="submit" variant="contained" 
+          
+          sx={{marginTop:3, borderRadius:3,backgroundColor:"#17CF1A"}} 
+          >
+          Retour
+          </Button>
+  </CardContent>
+</Card>
 </div>
 )}
 

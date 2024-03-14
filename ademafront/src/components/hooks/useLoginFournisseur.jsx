@@ -1,17 +1,18 @@
 import { useState } from "react"
 import axios from 'axios'
-import { useAuthContext } from "./useAuthContext"
+import { useGetContext } from "./useGetContext"
 
-    export const useLogin = () =>{
+    export const useLoginF = () =>{
 
     /* const logout = () =>{
             const local = localStorage.removeItem('user')
         }*/
 
         const [errorLogin,setErrorLogin] = useState(null)
-        const {dispatch} = useAuthContext()
+        const {dispatch} = useGetContext()
 
-        const login = async (data)=>{
+      
+        const loginFournisseur = async (data)=>{
             
             //const [value,setValue] = useState({email,password})
             /*axios.post("http://localhost:5000/login/user",data).then((res,error)=>{
@@ -31,7 +32,7 @@ import { useAuthContext } from "./useAuthContext"
 
             
         })*/try{
-            const response = await axios.post("http://localhost:5000/login/user",data)
+            const response = await axios.post("http://localhost:5000/login/fournisseur",data)
             //tsy ilaina ngamba
             //const json = await response.json()
             // on post d'abord email pour recuperer objet founisseur 
@@ -42,14 +43,13 @@ import { useAuthContext } from "./useAuthContext"
                 
             }*/
             if (response.status === 200){
-                 localStorage.setItem('user',JSON.stringify(response))
-                 dispatch({type:"admin",payload:response})
+                 localStorage.setItem('entity',JSON.stringify(response))
+                 dispatch({type:"isGet",payload:response})
                 //  console.log(response.data.token)
             } }catch(error){
                 
                 console.log(error)
            } 
         }
-        
-        return {login}
+        return {loginFournisseur}
     }

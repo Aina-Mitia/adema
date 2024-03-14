@@ -40,7 +40,7 @@ const Login = () => {
     }).catch(err=>console.log(err))
   },[])*/
 
-  const handleSubmit =  (e) => {
+  const handleSubmit = async  (e) => {
     e.preventDefault()
     /*axios.post("http://localhost:5000/login",value).then(res=>{
       if (res.data.Login ){
@@ -51,10 +51,12 @@ const Login = () => {
       }
     }).catch(err=>console.log(err))
     */
-    console.log(value);
-     login(value);
-     getEntity(value.email)
-     navigate("/")
+    
+     await login(value);
+     //getEntity(value.email)
+     setTimeout(() => {
+      navigate("/")
+    }, 3000); 
      console.log(user)
     
     
@@ -68,7 +70,7 @@ const Login = () => {
   
 return (
   <div>
-    <Stack>
+       <Stack>
       <form onSubmit={handleSubmit} >
       
       <Box
@@ -131,9 +133,9 @@ return (
           }>
           Se connecter
           </Button>
-          <Button type="submit" variant="contained" 
-          
-          sx={{marginTop:3, borderRadius:3,backgroundColor:"#17CF1A"}} 
+          <Button  variant="contained" 
+          sx={{marginTop:3, borderRadius:3,backgroundColor:"#17CF1A"}}
+          onClick={()=>{navigate("/signup")}} 
           >
           S'inscrire
           </Button>
@@ -153,12 +155,20 @@ return (
         <p></p>
         <p></p>
         <Typography variant="h4" component="div" color="black" align="center" gutterBottom>
-          Bienvenue cher fournisseur
+          Bienvenue sur notre application
         </Typography>
         <Typography variant="body1" color="black" align="center">
           Découvrez toutes les fonctionnalités  que nous offrons.
         </Typography>
-       
+        <Typography variant="h8" color="black" align="center">
+          Veuillez cliquer le bouton ci-dessous si vous êtes un fournisseur pour se connecter.
+        </Typography>
+        <Button  variant="contained" 
+                    onClick={()=>{navigate("/login/admin")}} 
+          sx={{position:'absolute', left:250,bottom:150, borderRadius:3,backgroundColor:"#17CF1A"}} 
+          >
+          Cliquez ici
+          </Button>
       </Box>
       </Stack>
       </div>

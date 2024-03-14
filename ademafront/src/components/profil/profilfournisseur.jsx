@@ -10,24 +10,26 @@ import Navbarhome from "../navbar/navbarhome";
 import { useGetContext } from '../hooks/useGetContext';
 
 
-const Profil = () =>{
+const Profilfournisseur = () =>{
 
 const [data,setData] = useState([]);
 const {entity} = useGetContext()
 
 /*router.post("/fournisseur/compte", getFournisseurCompte)
 router.post("/admin/compte", getAdminCompte) */
-
-useEffect( ()=>{
-  if (entity){
-     axios.post('http://localhost:5000/admin/compte',{
-      email: entity.data.email
-    })
+const actif = async ()=> {
+   await axios.post('http://localhost:5000/fournisseur/getcompte', entity.data.email
+    )
     .then((res)=>{
         setData(res.data)
 
     })
-    .catch(err=>console.log(err))}
+    .catch(err=>console.log(err))
+}
+useEffect( ()=>{
+  if (entity){
+    actif()
+     }
 },[])
  
 
@@ -47,7 +49,7 @@ return(
       </Grid>
       <Grid item xs={8}>
         <Typography variant="body1">
-          RABE
+          {data.name}
         </Typography>
       </Grid>
       <Grid item xs={4}>
@@ -57,7 +59,7 @@ return(
       </Grid>
       <Grid item xs={8}>
         <Typography variant="body1">
-          Nandrasana
+        {data.lastname}
         </Typography>
       </Grid>
       <Grid item xs={4}>
@@ -67,7 +69,7 @@ return(
       </Grid>
       <Grid item xs={8}>
         <Typography variant="body1">
-          rabenandrasana@gmail.com
+        {data.email}
         </Typography>
       </Grid>
       <Grid item xs={4}>
@@ -77,7 +79,7 @@ return(
       </Grid>
       <Grid item xs={8}>
         <Typography variant="body1">
-          ********
+          {data.password}
         </Typography>
       </Grid>
     </Grid>
@@ -94,4 +96,4 @@ return(
 )
 }
 
-export default Profil;
+export default Profilfournisseur;

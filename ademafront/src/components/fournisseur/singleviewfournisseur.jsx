@@ -5,60 +5,108 @@ import {  useParams,useNavigate, Link } from "react-router-dom";
 //import { toast } from "react-toastify";
 import axios from "axios";
 import Navbar from '../navbar/navbar'
-import { Box, Button, Card, CardActions, CardContent, Stack, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Stack, Typography,Grid } from "@mui/material";
 
 
 
-const SingleViewFournisseur = (props) =>{
+const SingleViewFournisseur = () =>{
 
 const [data,setData] = useState([]);
 const {id} = useParams();
-const {idF} = props;
-idF = id;
 
 useEffect( ()=>{
-     axios.get('http://localhost:5000/fournisseur/'+idF)
+     axios.get('http://localhost:5000/fournisseur/'+id)
     .then(res=>setData(res.data))
     .catch(err=>console.log(err))
 },[])
     
+/*
+name:"",
+    contact:"",
+    adress:"",
+    email:"",
+    nif:"",
+    stat:""
+*/
 
 return(
 <div>
 <Navbar/>
-<Box>
-    <Card>
-        <CardContent>
-            <Stack>
-            <Typography gutterBottom variant="subtitle">Nom du fournisseur:</Typography>
-            <Typography variant="subtitle2">{data.name}</Typography>
-            </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">Contact:</Typography>
-            <Typography variant="subtitle2">{data.contact}</Typography>
-        </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">Adresse du fournisseur:</Typography>
-            <Typography variant="subtitle2">{data.adress}</Typography>
-        </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">E-mail:</Typography>
-            <Typography variant="subtitle2">{data.email}</Typography>
-        </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">NIF:</Typography>
-            <Typography variant="subtitle2">{data.nif}</Typography>
-        </Stack>
-        <Stack>
-            <Typography gutterBottom variant="subtitle">STAT:</Typography>
-            <Typography variant="subtitle2">{data.stat}</Typography>
-        </Stack>
-        </CardContent>
-        <CardActions>
-        <Button> <Link to="/fournisseur">Retour</Link></Button>
-        </CardActions>
-        </Card>
-        </Box>
+<Card style={{ maxWidth: 400, margin: 'auto', marginTop:150 }}>
+  <CardContent>
+    <Typography variant="h2" style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 16,color:"#17CF1A" }}>
+      Fournisseur
+    </Typography>
+    <Grid container spacing={2}>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16, fontWeight: 'bold',textAlign:"right" }}>
+          Nom :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.name}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16, fontWeight: 'bold',textAlign:"right" }}>
+          Email :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.email}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16, fontWeight: 'bold',textAlign:"right" }}>
+          Contact :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.contact}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16 , fontWeight: 'bold',textAlign:"right"}}>
+          Adresse :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.adress}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16 , fontWeight: 'bold',textAlign:"right"}}>
+          NIF :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.nif}
+        </Typography>
+      </Grid>
+      <Grid item xs={4}>
+        <Typography variant="h6" style={{ fontSize: 16 , fontWeight: 'bold',textAlign:"right"}}>
+          STAT :
+        </Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <Typography variant="body1">
+          {data.stat}
+        </Typography>
+      </Grid>
+    </Grid>
+    <Button type="submit" variant="contained" 
+          
+          sx={{marginTop:3, borderRadius:3,backgroundColor:"#17CF1A"}} 
+          >
+          Retour
+          </Button>
+  </CardContent>
+</Card>
 </div>
 )}
 

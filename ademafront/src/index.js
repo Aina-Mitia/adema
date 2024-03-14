@@ -8,10 +8,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from './components/contexts/authcontext';
 import { GetContextProvider } from './components/contexts/getcontext';
+import { DeleteContextProvider } from './components/contexts/deletecontext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <DeleteContextProvider>
     <GetContextProvider>
       <AuthContextProvider>
         <BrowserRouter>
@@ -19,6 +21,7 @@ root.render(
         </BrowserRouter>
       </AuthContextProvider>
     </GetContextProvider>
+    </DeleteContextProvider>
   </React.StrictMode>
 );
 
