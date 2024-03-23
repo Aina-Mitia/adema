@@ -56,7 +56,7 @@ const Login = () => {
      //getEntity(value.email)
      setTimeout(() => {
       navigate("/")
-    }, 3000); 
+    }, 2500); 
      console.log(user)
     
     

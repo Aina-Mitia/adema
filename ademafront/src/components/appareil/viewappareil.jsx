@@ -86,7 +86,7 @@ useEffect( ()=>{
     .catch(err=>console.log(err))
     }*/
 
-},[done])
+},[done,room])
 
 /*useEffect( ()=>{
     
@@ -131,7 +131,7 @@ const handlebutton = (e) => {
     //e.preventDefault()
     const choix= e.target.value;
     if (choix === "toutes"){
-       
+        setRoom('no')
         setData(allData)
         setSelect("toutes")
     } else if (choix === "bureau"){
@@ -180,7 +180,7 @@ return(
 
      
         <Box width="250px">
-        <TextField value="toutes" label='selectionner la categorie' select fullWidth onChange={handlebutton}  >
+        <TextField value={select} label='selectionner la categorie' select fullWidth onChange={handlebutton}  >
             <MenuItem value="toutes">Toutes</MenuItem>
             <MenuItem value="bureau">Bureau</MenuItem>
             <MenuItem value="portable">portable</MenuItem>

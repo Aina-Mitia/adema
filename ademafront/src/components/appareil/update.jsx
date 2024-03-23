@@ -64,7 +64,7 @@ const handleUpdate = async (e) => {
         
         setTimeout(() => {
             navigate("/appareil/adema");
-        }, 2000);
+        }, 1500);
     //closeFunction()
 }
 const paperStyle = { padding: "40px 20px", width: 750, margin: " auto" ,position:"relative",top:"50px"}

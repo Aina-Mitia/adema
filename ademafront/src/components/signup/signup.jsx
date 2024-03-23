@@ -34,7 +34,7 @@ const Signup = () => {
       await signup(value)
       setTimeout(() => {
         navigate("/")
-      }, 3000); 
+      }, 2500); 
       
   }
   

@@ -34,7 +34,9 @@ const handleSubmit = (e) => {
     axios.post('http://localhost:5000/fournisseurr',data)
         .then(res=>{
             console.log(res);
-            navigate("/fournisseur");
+            setTimeout(() => {
+                navigate("/fournisseur")
+              }, 1500); 
         })
         .catch(err=>console.log(err))
 }

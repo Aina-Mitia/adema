@@ -29,7 +29,8 @@ const socket = io.connect("http://localhost:5000")
 export const searchFournisseur = async (req,res) =>{
 
     try {
-        const fournisseur = await Appareil.find({name: req.body})
+        const {name}=req.body
+        const fournisseur = await Appareil.find({name: name})
         res.status(200).json(fournisseur) 
         
     } catch (error) {
@@ -114,7 +115,7 @@ export const deleteAppareil = async (req,res) =>{
 
     try {
         const {id} = req.params;
-        const appareil = await Appareil.findByIdAndDelete(id)
+        const appareil = await Appareil.findByIdAndDelete(id);
         if (!appareil){
            return res.status(404).json({message:"cannot find this one"})
         }

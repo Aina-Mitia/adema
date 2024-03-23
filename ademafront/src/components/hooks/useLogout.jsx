@@ -18,14 +18,14 @@ import { Link, useNavigate } from 'react-router-dom';
                 if(entity){
                  localStorage.removeItem('entity')
                     
-                    setTimeout(() => {
-                        navigate("/")
-                      }, 3000); 
+                    
                 }else if (user){
                     localStorage.removeItem('user')
+                      }  
+
                     setTimeout(() => {
-                        navigate("/")
-                      }, 3000);                 }
+                        navigate("/login")
+                      }, 1500);              
        
         }
 

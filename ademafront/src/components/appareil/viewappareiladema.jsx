@@ -108,7 +108,7 @@ useEffect(()=>{
     .catch(err=>console.log(err))
     }*/
     }
-},[entity])
+},[entity, room])
   
 /*useEffect( ()=>{
     
@@ -124,10 +124,10 @@ const handleDelete = async (id) => {
      await axios.delete('http://localhost:5000/appareil/'+id)
     .catch(err=>console.log(err))
     await dispatch({type:"delete",payload:data})
-
+    setRoom("okk")
     setTimeout(() => {
         navigate("/appareil/adema")
-      }, 1000); 
+      }, 1500); 
 
     //setData(appareil)
     
@@ -155,7 +155,7 @@ const handlebutton = (e) => {
     //e.preventDefault()
     const choix= e.target.value;
     if (choix === "toutes"){
-       
+       setRoom('no')
         setData(allData)
         setSelect("toutes")
     } else if (choix === "bureau"){
@@ -211,7 +211,7 @@ return(
 
      
         <Box width="250px">
-        <TextField value="toutes" label='selectionner la categorie' select fullWidth onChange={handlebutton}  >
+        <TextField value={select} label='selectionner la categorie' select fullWidth onChange={handlebutton}  >
         <MenuItem value="toutes">Toutes</MenuItem>
             <MenuItem value="bureau">Bureau</MenuItem>
             <MenuItem value="portable">portable</MenuItem>

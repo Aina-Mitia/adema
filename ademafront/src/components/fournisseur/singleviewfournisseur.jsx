@@ -13,6 +13,8 @@ const SingleViewFournisseur = () =>{
 
 const [data,setData] = useState([]);
 const {id} = useParams();
+const navigate = useNavigate();
+
 
 useEffect( ()=>{
      axios.get('http://localhost:5000/fournisseur/'+id)
@@ -101,7 +103,12 @@ return(
     </Grid>
     <Button type="submit" variant="contained" 
           
-          sx={{marginTop:3, borderRadius:3,backgroundColor:"#17CF1A"}} 
+          sx={{marginTop:3, borderRadius:3,backgroundColor:"#17CF1A"}}
+          onClick={(e)=>{
+            e.preventDefault()
+            navigate('/fournisseur ')
+          }}
+          
           >
           Retour
           </Button>

@@ -54,7 +54,7 @@ const handleSubmit = async (e) => {
     await dispatch({type:"dele",payload: data})
         setTimeout(() => {
             navigate("/appareil/adema");
-        }, 1000); 
+        }, 1500); 
         //closeFunction()
     
     

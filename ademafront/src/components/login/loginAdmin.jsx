@@ -53,7 +53,7 @@ const LoginAdmin = () => {
     await loginFournisseur(value);
     setTimeout(() => {
       navigate("/")
-    }, 3000); 
+    }, 2500); 
     //await getEntityAdmin(value.email)
     await console.log(entity)
     

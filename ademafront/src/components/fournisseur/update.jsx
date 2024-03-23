@@ -45,7 +45,10 @@ const handleUpdate = (e) => {
     axios.put('http://localhost:5000/fournisseur/'+id , value)
         .then(res=>{
             console.log(res);
-            navigate("/fournisseur");
+           
+            setTimeout(() => {
+                navigate("/fournisseur")
+              }, 1500); 
         })
         .catch(err=>console.log(err))
 

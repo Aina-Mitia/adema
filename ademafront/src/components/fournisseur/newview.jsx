@@ -38,7 +38,7 @@ const [datasearch,setDatasearch] = useState({name:""})
 
 //const {id} = useParams();
 const navigate= useNavigate()
-const [room,setRoom] = useState("ok")
+const [room,setRoom] = useState("")
 
 const [dialogOpen, setDialogOpen] = useState(false);
 const handleCloseDialog = () => {
@@ -79,7 +79,7 @@ useEffect( ()=>{
     .catch(err=>console.log(err))
     }*/
 
-},[])
+},[room])
 
 /*useEffect( ()=>{
     
@@ -92,7 +92,15 @@ useEffect( ()=>{
 
 
 const handleDelete = async  (id) => {
-    await axios.delete('http://localhost:5000/appareil/'+id)
+    await axios.delete('http://localhost:5000/fournisseur/'+id)
+    .then(()=>{
+        setRoom('ok')
+        setTimeout(() => {
+            navigate("/fournisseur")
+          }, 1500); 
+          
+
+    })
     .catch(err=>console.log(err))
     //setData(appareil)
     

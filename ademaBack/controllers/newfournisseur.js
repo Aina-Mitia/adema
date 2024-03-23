@@ -70,7 +70,8 @@ export const getFournisseurCompte = async (req,res) =>{
 export const searchFournisseur = async (req,res) =>{
 
     try {
-        const fournisseur = await Fournisseur.find({name: req.body})
+        const {name} = req.body
+        const fournisseur = await Fournisseur.find({name: name})
         res.status(200).json(fournisseur) 
         
     } catch (error) {
